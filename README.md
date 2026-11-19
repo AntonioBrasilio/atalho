@@ -58,7 +58,23 @@ por exemplo [quanto espaço precisa](/gta6/r/quanto-espaco-gta-6-precisa/).
 
 3. Faça commit e push. A Netlify publica em 1 a 2 minutos.
 
-Os atalhos "Mais buscadas" da home ficam em `src/pages/index.astro` (lista `populares`). A contagem regressiva do lançamento fica em `src/components/StatusLancamento.astro` e vira "Já disponível" sozinha depois da data.
+Na home (`src/pages/index.astro`) você troca à vontade:
+
+- `exemplos`: perguntas de exemplo. Ao tocar, a resposta aparece na própria busca.
+- `prontas`: respostas mostradas inteiras na home (ícone + slug).
+- O quadro do cheat de dinheiro usa a resposta `codigo-dinheiro-gta-6`.
+
+### Como a busca funciona
+
+O motor fica em `src/lib/motor.ts` (sem dependências). Ele entende a pergunta do jeito que a pessoa escreve:
+
+- ignora acentos, maiúsculas e palavras vazias ("como", "o", "gta", "6");
+- junta variações da mesma palavra ("carros", "carro"; "guardei", "guardar");
+- entende gírias e sinônimos ("grana" = dinheiro, "xit" = cheat, "tira" = polícia). A lista fica em `GRUPOS`; adicione palavras novas lá;
+- corrige erros de digitação ("dinhero", "polisia") e completa a palavra que ainda está sendo digitada;
+- dá mais peso à pergunta e aos `sinonimos` da resposta, e também procura no texto completo dos detalhes.
+
+O primeiro resultado aparece aberto, com a resposta inteira (e as setas do cheat, quando houver). Para melhorar uma busca específica, o caminho mais rápido é colocar a frase que as pessoas usam em `sinonimos` da resposta. Os termos sem resultado chegam no Google Forms (veja abaixo).
 
 **Campos:**
 

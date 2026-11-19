@@ -4,6 +4,7 @@ import Busca from '../../components/Busca.astro';
 import Migalhas from '../../components/Migalhas.astro';
 import CardResposta from '../../components/CardResposta.astro';
 import Selo from '../../components/Selo.astro';
+import Sequencia from '../../components/Sequencia.astro';
 import Anuncio from '../../components/Anuncio.astro';
 import WhatsCta from '../../components/WhatsCta.astro';
 import { respostasGta6 } from '../../lib/dados';
@@ -85,7 +86,7 @@ const tabelas: { titulo: string; lista: Resposta[]; vazio: string }[] = [
                       </div>
                     </td>
                     <td>
-                      <code class="seq">{r.data.codigo!.sequencia}</code>
+                      <Sequencia seq={r.data.codigo!.sequencia} />
                     </td>
                   </tr>
                 ))}

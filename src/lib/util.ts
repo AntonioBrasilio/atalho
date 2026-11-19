@@ -6,20 +6,20 @@ export type Guia = CollectionEntry<'guias'>;
 export type Status = Resposta['data']['status'];
 export type Categoria = Resposta['data']['categoria'];
 
-export const CATEGORIA_INFO: Record<Categoria, { nome: string; descricao: string; paginaFixa?: string }> = {
-  lancamento: { nome: 'Geral', descricao: 'Duração, online e informações gerais do jogo.' },
-  policia: { nome: 'Polícia', descricao: 'Estrelas de procurado e Perfil Criminal.' },
-  dinheiro: { nome: 'Dinheiro', descricao: 'Como ganhar, guardar e gastar dinheiro.' },
-  mecanicas: { nome: 'Mecânicas', descricao: 'O que dá e o que não dá para fazer.' },
-  mapa: { nome: 'Mapa', descricao: 'Regiões e lugares de Leonida.' },
-  personagens: { nome: 'Personagens', descricao: 'Protagonistas e elenco.' },
-  missoes: { nome: 'Missões', descricao: 'Missões que não aparecem e dicas de progresso.' },
-  trofeus: { nome: 'Troféus', descricao: 'Troféus e conquistas.', paginaFixa: '/gta6/trofeus/' },
-  erros: { nome: 'Erros', descricao: 'Tela preta, travamentos e soluções.', paginaFixa: '/gta6/erros/' },
-  codigos: { nome: 'Códigos', descricao: 'Cheats: como ativar, desbloquear e alertas de golpe.', paginaFixa: '/gta6/codigos/' },
-  veiculos: { nome: 'Veículos', descricao: 'Guardar, chamar, roubar, vender e carros raros.' },
-  armas: { nome: 'Armas', descricao: 'Onde comprar e as melhores armas.' },
-  segredos: { nome: 'Segredos', descricao: 'Easter eggs e curiosidades.' },
+export const CATEGORIA_INFO: Record<Categoria, { nome: string; icone: string; descricao: string; paginaFixa?: string }> = {
+  lancamento: { nome: 'Geral', icone: '📌', descricao: 'Duração, online e informações gerais do jogo.' },
+  policia: { nome: 'Polícia', icone: '🚓', descricao: 'Estrelas de procurado e Perfil Criminal.' },
+  dinheiro: { nome: 'Dinheiro', icone: '💰', descricao: 'Como ganhar, guardar e gastar dinheiro.' },
+  mecanicas: { nome: 'Mecânicas', icone: '🕹️', descricao: 'O que dá e o que não dá para fazer.' },
+  mapa: { nome: 'Mapa', icone: '🗺️', descricao: 'Regiões e lugares de Leonida.' },
+  personagens: { nome: 'Personagens', icone: '👥', descricao: 'Protagonistas e elenco.' },
+  missoes: { nome: 'Missões', icone: '🎯', descricao: 'Missões que não aparecem e dicas de progresso.' },
+  trofeus: { nome: 'Troféus', icone: '🏆', descricao: 'Troféus e conquistas.', paginaFixa: '/gta6/trofeus/' },
+  erros: { nome: 'Erros', icone: '🛠️', descricao: 'Tela preta, travamentos e soluções.', paginaFixa: '/gta6/erros/' },
+  codigos: { nome: 'Códigos', icone: '🎮', descricao: 'Cheats: como ativar, desbloquear e alertas de golpe.', paginaFixa: '/gta6/codigos/' },
+  veiculos: { nome: 'Veículos', icone: '🚗', descricao: 'Guardar, chamar, roubar, vender e carros raros.' },
+  armas: { nome: 'Armas', icone: '🔫', descricao: 'Onde comprar e as melhores armas.' },
+  segredos: { nome: 'Segredos', icone: '🔍', descricao: 'Easter eggs e curiosidades.' },
 };
 
 export const STATUS_INFO: Record<Status, { emoji: string; rotulo: string; curto: string; classe: string }> = {

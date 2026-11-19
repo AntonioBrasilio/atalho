@@ -2,13 +2,15 @@
 import { config } from '../config';
 interface Props {
   compacta?: boolean;
+  /** Resultados dentro da página (empurram o conteúdo) em vez de flutuar por cima. */
+  inline?: boolean;
   id?: string;
 }
-const { compacta = false, id = 'busca' } = Astro.props;
+const { compacta = false, inline = false, id = 'busca' } = Astro.props;
 const zap = config.whatsappChannelUrl || '/comunidade/';
 ---
 
-<form class:list={['busca', { compacta }]} role="search" action="/" method="get" data-busca>
+<form class:list={['busca', { compacta, inline }]} role="search" action="/" method="get" data-busca>
   <label for={id} class="sr-only">Buscar uma resposta</label>
   <div class="campo">
     <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -21,7 +23,7 @@ const zap = config.whatsappChannelUrl || '/comunidade/';
       name="q"
       autocomplete="off"
       enterkeyhint="search"
-      placeholder={compacta ? 'Buscar outra dúvida…' : 'Ex.: guardar carro, cheat, fugir da polícia…'}
+      placeholder={compacta ? 'Pergunte outra coisa…' : 'Ex.: como guardo meu carro?'}
       role="combobox"
       aria-expanded="false"
       aria-controls={`${id}-lista`}
@@ -29,6 +31,7 @@ const zap = config.whatsappChannelUrl || '/comunidade/';
     />
     <button type="submit" class="ir">Buscar</button>
   </div>
+  <p class="busca-correcao" aria-live="polite" hidden></p>
   <ul id={`${id}-lista`} role="listbox" aria-label="Resultados" hidden></ul>
   <div class="busca-vazio" role="status" hidden>
     <p><strong>Ainda não temos essa resposta: estamos testando.</strong></p>
@@ -112,8 +115,69 @@ const zap = config.whatsappChannelUrl || '/comunidade/';
     overflow-y: auto;
     box-shadow: 0 12px 40px #000a;
   }
+  .busca.inline [role='listbox'] {
+    position: static;
+    max-height: none;
+    box-shadow: none;
+    background: var(--bg-2);
+  }
   .busca [role='option'] {
     margin: 0;
+  }
+  .busca-correcao {
+    margin: 0.4rem 0 0;
+    font-size: 0.88rem;
+    color: var(--txt-2);
+  }
+  .busca .sep {
+    margin: 0.5rem 0.7rem 0.2rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cinza);
+  }
+  .busca .top a {
+    gap: 0.4rem;
+    padding: 0.9rem 0.95rem 0.85rem;
+    background:
+      linear-gradient(var(--bg-2), var(--bg-2)) padding-box,
+      var(--grad) border-box;
+    border: 2px solid transparent;
+  }
+  .busca .top[aria-selected='true'] a,
+  .busca .top a:hover {
+    outline: 2px solid var(--laranja);
+  }
+  .busca .rot {
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--laranja);
+  }
+  .busca .top strong {
+    font-size: 0.95rem;
+    color: var(--txt-2);
+    font-weight: 600;
+  }
+  .busca .r-cheia {
+    font-size: 1.12rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--txt);
+  }
+  .busca .rodape-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.3rem 0.8rem;
+  }
+  .busca .ver {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ciano);
   }
   .busca [role='option'] a {
     display: grid;

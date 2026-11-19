@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Busca from '../../components/Busca.astro';
 import CardResposta from '../../components/CardResposta.astro';
+import RespostaPronta from '../../components/RespostaPronta.astro';
 import Migalhas from '../../components/Migalhas.astro';
 import Anuncio from '../../components/Anuncio.astro';
 import WhatsCta from '../../components/WhatsCta.astro';
@@ -46,7 +47,8 @@ const pat = config.patrocinador;
   }
 
   <h1><span class="grad-txt">GTA 6</span>: respostas rápidas</h1>
-  <Busca id="busca-hub" />
+  <p class="muted lead">Pergunte do seu jeito ou toque numa resposta abaixo: ela já aparece inteira.</p>
+  <Busca id="busca-hub" inline />
 
   <nav class="atalhos" aria-label="Páginas especiais">
     <a class="atalho" href="/gta6/codigos/"><span aria-hidden="true">🎮</span> Códigos</a>
@@ -54,14 +56,12 @@ const pat = config.patrocinador;
     <a class="atalho" href="/gta6/erros/"><span aria-hidden="true">🛠️</span> Erros</a>
   </nav>
 
-  <div class="secao-topo">
-    <h2>Destaques</h2>
-  </div>
+  <h2><span aria-hidden="true">⚡</span> Respostas prontas</h2>
   <ul class="lista-cards duas">
     {
       destaques.map((r) => (
         <li>
-          <CardResposta r={r} />
+          <RespostaPronta r={r} icone={CATEGORIA_INFO[r.data.categoria].icone} />
         </li>
       ))
     }
@@ -75,7 +75,7 @@ const pat = config.patrocinador;
       grupos.map((g) => (
         <li>
           <a class="chip" href={`#cat-${g.id}`}>
-            {g.nome} <span class="n">{g.lista.length}</span>
+            <span aria-hidden="true">{g.icone}</span> {g.nome} <span class="n">{g.lista.length}</span>
           </a>
         </li>
       ))
@@ -94,7 +94,7 @@ const pat = config.patrocinador;
       grupos.map((g) => (
         <section class="grupo" id={`cat-${g.id}`} aria-labelledby={`tit-${g.id}`}>
           <div class="secao-topo">
-            <h3 id={`tit-${g.id}`}>{g.nome}</h3>
+            <h3 id={`tit-${g.id}`}><span aria-hidden="true">{g.icone}</span> {g.nome}</h3>
             <a href={g.paginaFixa ?? urlCategoria(g.id)}>Abrir →</a>
           </div>
           <ul class="lista-cards duas">
@@ -140,6 +140,9 @@ const pat = config.patrocinador;
 </script>
 
 <style>
+  .lead {
+    margin: -0.3rem 0 0;
+  }
   .patro {
     display: block;
     margin-top: 0.6rem;

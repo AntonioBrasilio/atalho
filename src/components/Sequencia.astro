@@ -1,0 +1,14 @@
+---
+/** Mostra a sequência de um cheat como teclas do direcional. */
+interface Props {
+  seq: string;
+  grande?: boolean;
+}
+const { seq, grande = false } = Astro.props;
+const NOMES: Record<string, string> = { '↑': 'cima', '↓': 'baixo', '←': 'esquerda', '→': 'direita' };
+const teclas = seq.split(/\s+/).filter(Boolean);
+---
+
+<span class:list={['seq-teclas', { grande }]} role="img" aria-label={teclas.map((t) => NOMES[t] ?? t).join(', ')}>
+  {teclas.map((t) => <kbd aria-hidden="true">{t}</kbd>)}
+</span>

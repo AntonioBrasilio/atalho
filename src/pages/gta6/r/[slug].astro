@@ -7,6 +7,7 @@ import Selo from '../../../components/Selo.astro';
 import Anuncio from '../../../components/Anuncio.astro';
 import CaixaAfiliado from '../../../components/CaixaAfiliado.astro';
 import CardResposta from '../../../components/CardResposta.astro';
+import Sequencia from '../../../components/Sequencia.astro';
 import WhatsCta from '../../../components/WhatsCta.astro';
 import { config } from '../../../config';
 import { respostasGta6 } from '../../../lib/dados';
@@ -79,6 +80,14 @@ const textoCompartilhar = `${d.pergunta}\n${d.resposta_curta}`;
     <section class:list={['resposta', `st-${st.classe}`]} aria-labelledby="rotulo-resposta">
       <p class="rotulo" id="rotulo-resposta"><span aria-hidden="true">⚡</span> Resposta rápida</p>
       <p class="texto">{d.resposta_curta}</p>
+      {
+        d.codigo && (
+          <div class="seq-box">
+            <Sequencia seq={d.codigo.sequencia} grande />
+            <p class="seq-como">Abra o celular (<kbd>↑</kbd>), segure <kbd>L1</kbd>+<kbd>R1</kbd> ou <kbd>LB</kbd>+<kbd>RB</kbd> e digite.</p>
+          </div>
+        )
+      }
       <div class="rodape-resposta">
         <Selo status={d.status} />
         <span class="data">
@@ -271,6 +280,26 @@ const textoCompartilhar = `${d.pergunta}\n${d.resposta_curta}`;
     line-height: 1.42;
     font-weight: 650;
     color: #fff;
+  }
+  .seq-box {
+    margin-top: 0.8rem;
+  }
+  .seq-como {
+    margin: 0.55rem 0 0;
+    font-size: 0.88rem;
+    color: var(--txt-2);
+  }
+  .seq-como kbd {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: 0 0.3em;
+    border: 1px solid var(--borda-2);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: var(--bg-3);
+    font: 700 0.9em/1.45 system-ui, sans-serif;
+    text-align: center;
+    color: var(--txt);
   }
   .rodape-resposta {
     display: flex;

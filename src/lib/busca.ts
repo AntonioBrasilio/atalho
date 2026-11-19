@@ -1,16 +1,8 @@
-/* Busca instantânea no navegador (Fuse.js sobre /search.json). */
-import type Fuse from 'fuse.js';
+/* Busca instantânea no navegador (motor próprio sobre /search.json). */
 import { lerCfg } from './cliente';
+import { Motor, normalizar, type Doc, type Resultado } from './motor';
 
-interface Item {
-  u: string; // url
-  p: string; // pergunta
-  r: string; // resposta curta
-  st: 'confirmado' | 'vazamento' | 'testando';
-  c: string; // categoria
-  t: string[]; // tags
-  sn: string[]; // sinônimos
-}
+type Item = Doc;
 
 const SELO: Record<Item['st'], string> = {
   confirmado: '✅ Confirmado',
@@ -18,45 +10,20 @@ const SELO: Record<Item['st'], string> = {
   testando: '⏳ Testando',
 };
 
-const CATEGORIA: Record<string, string> = {
-  lancamento: 'Geral',
-  policia: 'Polícia',
-  dinheiro: 'Dinheiro',
-  mecanicas: 'Mecânicas',
-  mapa: 'Mapa',
-  personagens: 'Personagens',
-  missoes: 'Missões',
-  trofeus: 'Troféus',
-  erros: 'Erros',
-  codigos: 'Códigos',
-  veiculos: 'Veículos',
-  armas: 'Armas',
-  segredos: 'Segredos',
-};
-
-let fusePromise: Promise<Fuse<Item>> | null = null;
-function carregarFuse() {
-  fusePromise ??= Promise.all([import('fuse.js'), fetch('/search.json').then((r) => r.json())]).then(
-    ([mod, dados]) =>
-      new mod.default<Item>(dados as Item[], {
-        keys: [
-          { name: 'p', weight: 0.5 },
-          { name: 'sn', weight: 0.25 },
-          { name: 't', weight: 0.15 },
-          { name: 'r', weight: 0.1 },
-        ],
-        ignoreDiacritics: true,
-        isCaseSensitive: false,
-        ignoreLocation: true,
-        threshold: 0.4,
-        minMatchCharLength: 2,
-      }),
-  );
-  return fusePromise;
+let motorPromise: Promise<Motor> | null = null;
+function carregarMotor() {
+  motorPromise ??= fetch('/search.json')
+    .then((r) => r.json())
+    .then((dados: Doc[]) => new Motor(dados));
+  return motorPromise;
 }
 
-const normalizar = (s: string) =>
-  s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+const SETAS: Record<string, string> = { '↑': 'cima', '↓': 'baixo', '←': 'esquerda', '→': 'direita' };
+const seqHtml = (seq: string) =>
+  `<span class="seq-teclas" aria-label="${esc(seq.split(' ').map((x) => SETAS[x] ?? x).join(', '))}">${seq
+    .split(' ')
+    .map((x) => `<kbd aria-hidden="true">${esc(x)}</kbd>`)
+    .join('')}</span>`;
 
 const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
@@ -96,7 +63,7 @@ export function iniciarBuscas() {
     };
 
     const marcar = (i: number) => {
-      const lis = lista.querySelectorAll<HTMLLIElement>('li');
+      const lis = lista.querySelectorAll<HTMLLIElement>('li[role="option"]');
       lis.forEach((li, j) => li.setAttribute('aria-selected', String(j === i)));
       ativo = i;
       if (lis[i]) {
@@ -105,7 +72,11 @@ export function iniciarBuscas() {
       }
     };
 
-    const render = (termo: string) => {
+    const aviso = form.querySelector<HTMLElement>('.busca-correcao')!;
+
+    const render = (termo: string, certeiro: boolean, correcao?: string) => {
+      aviso.hidden = !correcao;
+      if (correcao) aviso.innerHTML = `Mostrando resultados para <strong>${esc(correcao)}</strong>`;
       if (!itens.length) {
         lista.hidden = true;
         lista.innerHTML = '';
@@ -117,15 +88,27 @@ export function iniciarBuscas() {
       }
       vazio.hidden = true;
       lista.innerHTML = itens
-        .map(
-          (it, i) => `<li role="option" id="b${idx}-op${i}" aria-selected="false">
+        .map((it, i) => {
+          const meta = `<span class="meta-r"><span class="sel sel-${it.st}">${SELO[it.st]}</span><span class="cat">${esc(it.cn)}</span></span>`;
+          if (i === 0)
+            return `<li role="option" id="b${idx}-op0" aria-selected="false" class="top">
             <a href="${esc(it.u)}" tabindex="-1">
-              <span class="meta-r"><span class="sel sel-${it.st}">${SELO[it.st]}</span><span class="cat">${esc(CATEGORIA[it.c] ?? '')}</span></span>
+              <span class="rot">⚡ ${certeiro ? 'Resposta direta' : 'Melhor resposta'}</span>
+              <strong>${esc(it.p)}</strong>
+              <span class="r-cheia">${esc(it.r)}</span>
+              ${it.cd ? seqHtml(it.cd) : ''}
+              <span class="rodape-top">${meta}<span class="ver">Ver detalhes →</span></span>
+            </a></li>`;
+          return `<li role="option" id="b${idx}-op${i}" aria-selected="false">
+            <a href="${esc(it.u)}" tabindex="-1">
+              ${meta}
               <strong>${esc(it.p)}</strong>
               <span class="resumo">${esc(it.r)}</span>
-            </a></li>`,
-        )
+            </a></li>`;
+        })
         .join('');
+      if (itens.length > 1)
+        lista.children[0].insertAdjacentHTML('afterend', '<li class="sep" role="presentation">Outras respostas</li>');
       lista.hidden = false;
       input.setAttribute('aria-expanded', 'true');
       ativo = -1;
@@ -137,14 +120,16 @@ export function iniciarBuscas() {
       const termo = input.value;
       if (normalizar(termo).length < 2) {
         fechar();
+        aviso.hidden = true;
         return;
       }
-      const fuse = await carregarFuse();
-      itens = fuse.search(termo, { limit: 8 }).map((r) => r.item);
-      if (input.value === termo) render(termo);
+      const motor = await carregarMotor();
+      const b = motor.buscar(termo, 7);
+      itens = b.resultados.map((r: Resultado) => r.doc);
+      if (input.value === termo) render(termo, b.certeiro, b.correcao);
     };
 
-    input.addEventListener('focus', () => void carregarFuse(), { once: true });
+    input.addEventListener('focus', () => void carregarMotor(), { once: true });
     input.addEventListener('input', () => {
       clearTimeout(timer);
       timer = window.setTimeout(buscar, 120);
@@ -183,6 +168,19 @@ export function iniciarBuscas() {
         if (e.key !== '/' || alvo.closest('input, textarea, [contenteditable]')) return;
         e.preventDefault();
         input.focus();
+      });
+    }
+
+    // Botões "pergunte assim": preenchem a 1ª busca e mostram a resposta na hora
+    if (idx === 0) {
+      document.addEventListener('click', (e) => {
+        const b = (e.target as HTMLElement).closest<HTMLElement>('[data-q]');
+        if (!b || e.defaultPrevented || (e as MouseEvent).ctrlKey || (e as MouseEvent).metaKey) return;
+        e.preventDefault();
+        input.value = b.dataset.q!;
+        buscar();
+        window.atalhoTrack?.('quick_question', { termo: b.dataset.q! });
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
 

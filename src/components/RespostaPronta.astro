@@ -1,0 +1,70 @@
+---
+/** Cartão "resposta primeiro": a resposta inteira já aparece, sem precisar abrir a página. */
+import Selo from './Selo.astro';
+import Sequencia from './Sequencia.astro';
+import { urlResposta, type Resposta } from '../lib/util';
+interface Props {
+  r: Resposta;
+  icone?: string;
+}
+const { r, icone } = Astro.props;
+const d = r.data;
+---
+
+<article class="pronta" data-status={d.status}>
+  <h3 class="p-perg">{icone && <span aria-hidden="true">{icone}</span>} {d.pergunta}</h3>
+  <p class="p-resp">{d.resposta_curta}</p>
+  {d.codigo && <Sequencia seq={d.codigo.sequencia} />}
+  <div class="p-rod">
+    <Selo status={d.status} curto />
+    <a href={urlResposta(d.slug)} aria-label={`Detalhes: ${d.pergunta}`}>Detalhes →</a>
+  </div>
+</article>
+
+<style>
+  .pronta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 0.95rem 1rem;
+    border-radius: var(--raio);
+    background: var(--bg-2);
+    border: 1px solid var(--borda);
+    border-left: 4px solid var(--verde);
+  }
+  .pronta[data-status='vazamento'] {
+    border-left-color: var(--amarelo);
+  }
+  .pronta[data-status='testando'] {
+    border-left-color: var(--cinza);
+  }
+  .p-perg {
+    margin: 0;
+    font: 700 0.95rem/1.35 system-ui, sans-serif;
+    letter-spacing: 0;
+    color: var(--txt-2);
+  }
+  .p-resp {
+    margin: 0;
+    font-size: 1.06rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--txt);
+  }
+  .p-rod {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+  .p-rod a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+</style>
