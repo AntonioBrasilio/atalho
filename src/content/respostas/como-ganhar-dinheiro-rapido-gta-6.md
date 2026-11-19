@@ -9,7 +9,11 @@ sinonimos: ["ficar rico","grana rápida","dinheiro infinito","farmar dinheiro","
 status: confirmado
 fonte_nome: "Vice"
 fonte_url: "https://www.vice.com/en/article/gta-6-how-to-make-money-fast/"
-atualizado_em: 2026-11-19T13:40:00-03:00
+fontes_extras:
+  - { nome: "GTA BOOM", url: "https://www.gtaboom.com/how-to-make-money-fast-and-early-in-gta-6-725c" }
+  - { nome: "GamerBolt", url: "https://www.gamerbolt.com/gta-6-money-guide/" }
+  - { nome: "OutputLag", url: "https://outputlag.com/guides/gta-6-make-money-fast/" }
+atualizado_em: 2026-11-19T10:55:00-03:00
 destaque: true
 ---
 
@@ -26,3 +30,11 @@ destaque: true
 **Depois:** assaltos a lojas, postos e joalherias liberam no capítulo 2.
 
 Não perca o que ganhou: [como guardar dinheiro](/gta6/r/como-nao-perder-dinheiro-gta-6/).
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- **Mergulho com Kenton:** cerca de **$1.400 por naufrágio** no começo. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Joalherias:** a partir do capítulo 3, até cerca de **$25.000**. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Cofres de banco:** perto do fim do capítulo 4, até **$205.000** por assalto. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Lojas pequenas** (conveniência, bebidas, fast food) pagam pouco e são de baixo risco, ainda mais sem ferir civis. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Poupança:** use a conta compartilhada e a meta "Family Savings" (cerca de $5.000). <span class="nc">❓ Não conseguimos confirmar</span>

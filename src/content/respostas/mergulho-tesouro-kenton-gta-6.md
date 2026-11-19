@@ -9,7 +9,9 @@ sinonimos: ["mergulhar","tesouro","naufragio","kenton","scanner"]
 status: confirmado
 fonte_nome: "Vice"
 fonte_url: "https://www.vice.com/en/article/gta-6-how-to-make-money-fast/"
-atualizado_em: 2026-11-19T13:36:00-03:00
+fontes_extras:
+  - { nome: "GTA BOOM", url: "https://www.gtaboom.com/how-to-make-money-fast-and-early-in-gta-6-725c" }
+atualizado_em: 2026-11-19T10:54:00-03:00
 destaque: false
 ---
 
@@ -19,3 +21,8 @@ destaque: false
 4. O pagamento chega **depois que ele vende** as peças, o que pode levar algumas horas.
 
 É um dos métodos de [dinheiro do começo do jogo](/gta6/r/como-ganhar-dinheiro-rapido-gta-6/) com pouco combate.
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- Cada naufrágio renderia cerca de **$1.400** no começo do jogo, com pouco combate. <span class="nc">❓ Não conseguimos confirmar</span>
+- O mergulho conta para os **100%** do jogo. <span class="nc">❓ Não conseguimos confirmar</span>

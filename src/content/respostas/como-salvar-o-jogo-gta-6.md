@@ -11,7 +11,7 @@ fonte_nome: "Game Rant"
 fonte_url: "https://gamerant.com/gta-6-save-game/"
 fontes_extras:
   - { nome: "TechRadar", url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19" }
-atualizado_em: 2026-11-19T13:32:00-03:00
+atualizado_em: 2026-11-19T10:32:00-03:00
 destaque: true
 ---
 

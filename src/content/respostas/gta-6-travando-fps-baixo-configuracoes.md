@@ -9,7 +9,7 @@ sinonimos: ["lag","travadinha","stuttering","fps baixo","60 fps","motion blur","
 status: vazamento
 fonte_nome: "TechRadar"
 fonte_url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19"
-atualizado_em: 2026-11-19T13:14:00-03:00
+atualizado_em: 2026-11-19T10:14:00-03:00
 destaque: false
 ---
 

@@ -12,7 +12,7 @@ fonte_url: "https://tecnoblog.net/responde/codigos-de-gta-6-todos-os-cheats-libe
 fontes_extras:
   - { nome: "Beebom", url: "https://beebom.com/gta-6-cheat-codes/" }
   - { nome: "Sportskeeda", url: "https://www.sportskeeda.com/gta/gta-6-cheat-codes-ps5-xbox" }
-atualizado_em: 2026-11-19T14:00:00-03:00
+atualizado_em: 2026-11-19T11:00:00-03:00
 destaque: true
 ---
 

@@ -9,7 +9,10 @@ sinonimos: ["nao abre","crashando","congelou","bug","tela preta","fechando sozin
 status: vazamento
 fonte_nome: "Business Upturn"
 fonte_url: "https://businessupturn.com/technology/gaming/gta-6-not-working-on-ps5-four-fixes-players-say-solved-launch-crashes-and-psn-errors/"
-atualizado_em: 2026-11-19T13:16:00-03:00
+fontes_extras:
+  - { nome: "The Tech Hacker", url: "https://thetechhacker.com/2026/11/19/fix-gta-6-crashing-ps5-turning-off/" }
+  - { nome: "LagoFast", url: "https://www.lagofast.com/en/blog/gta-6-crashing-and-freezing-on-ps5-and-xbox-series/" }
+atualizado_em: 2026-11-19T10:43:00-03:00
 destaque: true
 ---
 
@@ -24,3 +27,9 @@ Soluções relatadas por jogadores (não são oficiais da Rockstar):
 7. **Último recurso:** apague e baixe o jogo de novo. Antes, confira se o seu save tem cópia na nuvem.
 
 Travadas e FPS baixo? Veja as [configurações recomendadas](/gta6/r/gta-6-travando-fps-baixo-configuracoes/).
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- A causa mais comum de desligamento seria **superaquecimento**. <span class="nc">❓ Não conseguimos confirmar</span>
+- Para testar se o save está corrompido, inicie o jogo **sem carregar o save**. <span class="nc">❓ Não conseguimos confirmar</span>
+- O jogo precisaria de **conexão com a internet** para iniciar. <span class="nc">❓ Não conseguimos confirmar</span>

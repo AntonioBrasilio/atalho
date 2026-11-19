@@ -11,7 +11,7 @@ fonte_nome: "GamesRadar+"
 fonte_url: "https://www.gamesradar.com/games/grand-theft-auto/gta-6-personal-vehicles-how-to-register-switch-recover-car/"
 fontes_extras:
   - { nome: "TechRadar", url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19" }
-atualizado_em: 2026-11-19T13:48:00-03:00
+atualizado_em: 2026-11-19T10:48:00-03:00
 destaque: false
 ---
 

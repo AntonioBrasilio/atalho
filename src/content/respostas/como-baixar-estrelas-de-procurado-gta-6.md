@@ -10,8 +10,10 @@ status: vazamento
 fonte_nome: "KeenGamer"
 fonte_url: "https://www.keengamer.com/articles/guides/gta-6-how-to-lose-the-cops-and-clear-your-wanted-level/"
 fontes_extras:
+  - { nome: "OutputLag", url: "https://outputlag.com/guides/gta-6-lose-the-cops-wanted-level/" }
+  - { nome: "GTA Intel", url: "https://gtaintel.com/news/gta-6-police-system-overhaul-explained" }
   - { nome: "TechRadar", url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19" }
-atualizado_em: 2026-11-19T13:22:00-03:00
+atualizado_em: 2026-11-19T10:52:00-03:00
 destaque: true
 ---
 
@@ -27,3 +29,10 @@ destaque: true
 Com 3 estrelas ou mais na cidade, é mais fácil fugir **a pé por becos** do que num carro comum.
 
 Entenda o [sistema Heat](/gta6/r/o-que-e-sistema-heat-gta-6/).
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- O **Pay 'N' Spray** zeraria o nível de procurado, segundo um guia; outro diz que ele só troca a cor e despista. <span class="nc">❓ Não conseguimos confirmar</span>
+- A **polícia não aparece no minimapa**: é preciso enxergar as viaturas. <span class="nc">❓ Não conseguimos confirmar</span>
+- Se você for **preso**, o carro pode ser **apreendido**. <span class="nc">❓ Não conseguimos confirmar</span>
+- Algumas fontes dizem que entrar na **safehouse** zera as estrelas; outras negam. <span class="nc">❓ Não conseguimos confirmar</span>

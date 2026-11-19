@@ -12,7 +12,7 @@ fonte_url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19"
 fontes_extras:
   - { nome: "Kotaku", url: "https://kotaku.com/live-updates-on-gta-6-the-biggest-launch-in-gaming-history-2000758030" }
   - { nome: "Endgame Tools", url: "https://endgametools.com/en/gta-6/news/gta-6-easter-eggs" }
-atualizado_em: 2026-11-19T13:12:00-03:00
+atualizado_em: 2026-11-19T10:44:00-03:00
 destaque: true
 ---
 
@@ -24,3 +24,9 @@ Achados dos jogadores no dia do lançamento:
 - Também circulam relatos do **apartamento do Dexter** e de um **cachorro de jet ski**.
 
 Vamos confirmar cada um no jogo e atualizar esta lista.
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- **Apartamento do Dexter** (referência à série). <span class="nc">❓ Não conseguimos confirmar</span>
+- **Cachorro pilotando jet ski**. <span class="nc">❓ Não conseguimos confirmar</span>
+- Um vídeo viral sugere que **cachorros conseguem dirigir**. <span class="nc">❓ Não conseguimos confirmar</span>

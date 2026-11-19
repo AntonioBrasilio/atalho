@@ -11,7 +11,7 @@ fonte_nome: "Tecnoblog"
 fonte_url: "https://tecnoblog.net/responde/codigos-de-gta-6-todos-os-cheats-liberados-para-ps5-e-xbox/"
 fontes_extras:
   - { nome: "Sportskeeda", url: "https://www.sportskeeda.com/gta/gta-6-cheat-codes-ps5-xbox" }
-atualizado_em: 2026-11-19T13:58:00-03:00
+atualizado_em: 2026-11-19T10:58:00-03:00
 destaque: false
 ---
 
@@ -24,8 +24,11 @@ Exemplos divulgados pelos guias (ainda não testados por nós):
 | Attack Force | Terminar a história |
 | Mudar o clima (Cycle Weather) | Terminar a história |
 | Colete à prova de balas | Completar 100 treinos |
-| Aumentar nível de procurado | Perder 3 estrelas de procurado 25 vezes |
+| Aumentar o Heat | Perder 3 estrelas de procurado 25 vezes |
+| Aumentar nível de procurado | Perder 3 estrelas de procurado 50 vezes <span class="nc">❓ Não conseguimos confirmar</span> |
 
 Segundo o Tecnoblog, os cheats se dividem em: 10 de jogador, 11 de combate, 21 de veículos, 3 de ambiente e 16 filtros. Parte deles ainda não foi descoberta pelos jogadores.
 
-Para digitar, veja [como usar cheats](/gta6/r/gta-6-tem-codigos-cheats/).
+- Cada cheat aparece na aba **Progresso** do menu de pausa quando você cumpre a condição; a entrada "Cheats" só surge depois da missão final. <span class="nc">❓ Não conseguimos confirmar</span>
+
+Veja a [lista com os 61 cheats e como liberar cada um](/gta6/r/lista-todos-cheats-gta-6/). Para digitar, veja [como usar cheats](/gta6/r/gta-6-tem-codigos-cheats/).

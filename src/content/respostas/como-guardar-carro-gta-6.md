@@ -10,9 +10,12 @@ status: confirmado
 fonte_nome: "Push Square"
 fonte_url: "https://www.pushsquare.com/guides/gta-6-tips-and-tricks-you-need-to-know"
 fontes_extras:
+  - { nome: "GTA6 Motors", url: "https://gta6motors.com/guides/garages/" }
+  - { nome: "EGamers", url: "https://egamers.io/gta-6-garage-guide-how-to-register-store-and-call-your-own-car/" }
+  - { nome: "GameSpot", url: "https://www.gamespot.com/articles/how-to-own-more-cars-and-other-vehicles-in-gta-6/" }
   - { nome: "TechRadar", url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19" }
   - { nome: "GamesRadar+", url: "https://www.gamesradar.com/games/grand-theft-auto/gta-6-personal-vehicles-how-to-register-switch-recover-car/" }
-atualizado_em: 2026-11-19T13:50:00-03:00
+atualizado_em: 2026-11-19T10:58:00-03:00
 destaque: true
 ---
 
@@ -26,3 +29,9 @@ destaque: true
 - Carros com **rastreador** precisam ser "limpos" antes de registrar ou vender.
 
 Precisa de mais vagas? Veja as [garagens e preços](/gta6/r/garagens-gta-6-precos/).
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- **Vagas no começo:** os sites divergem. Um fala em espaço para 3 carros, outro em só 1 vaga. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Garagem grátis de Valentina:** daria mais 2 vagas. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Rastreador:** um receptador que remove rastreadores seria liberado mais tarde na história. <span class="nc">❓ Não conseguimos confirmar</span>

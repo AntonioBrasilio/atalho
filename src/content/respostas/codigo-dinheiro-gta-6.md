@@ -11,7 +11,7 @@ fonte_nome: "Sportskeeda"
 fonte_url: "https://www.sportskeeda.com/gta/gta-6-cheat-codes-ps5-xbox"
 fontes_extras:
   - { nome: "Tecnoblog", url: "https://tecnoblog.net/responde/codigos-de-gta-6-todos-os-cheats-liberados-para-ps5-e-xbox/" }
-atualizado_em: 2026-11-19T13:56:00-03:00
+atualizado_em: 2026-11-19T10:56:00-03:00
 destaque: true
 codigo:
   plataforma: ambos

@@ -409,6 +409,26 @@ code {
   color: var(--txt-2);
 }
 
+/* Marcação inline: <span class="nc">❓ Não conseguimos confirmar</span> */
+.nc {
+  display: inline-block;
+  margin: 0 0.15rem;
+  padding: 0.02rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid #ffd23f66;
+  background: #ffd23f14;
+  color: var(--amarelo);
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: 0.08em;
+}
+.prosa h3 {
+  font-size: 1.15rem;
+  margin-top: 1.4rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -11,7 +11,7 @@ fonte_nome: "Tecnoblog"
 fonte_url: "https://tecnoblog.net/responde/codigos-de-gta-6-todos-os-cheats-liberados-para-ps5-e-xbox/"
 fontes_extras:
   - { nome: "Beebom", url: "https://beebom.com/gta-6-cheat-codes/" }
-atualizado_em: 2026-11-19T13:54:00-03:00
+atualizado_em: 2026-11-19T10:54:00-03:00
 destaque: false
 ---
 

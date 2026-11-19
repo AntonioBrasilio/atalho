@@ -11,7 +11,7 @@ fonte_nome: "Beebom"
 fonte_url: "https://beebom.com/gta-6-garage-locations/"
 fontes_extras:
   - { nome: "GTABase", url: "https://www.gtabase.com/gta-6/properties/" }
-atualizado_em: 2026-11-19T13:34:00-03:00
+atualizado_em: 2026-11-19T10:34:00-03:00
 destaque: false
 ---
 

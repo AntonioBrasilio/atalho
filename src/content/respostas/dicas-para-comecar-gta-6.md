@@ -10,9 +10,11 @@ status: confirmado
 fonte_nome: "TechRadar"
 fonte_url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19"
 fontes_extras:
+  - { nome: "VZone", url: "https://vzone.gg/noticia/gta-6-dicas-escondidas/" }
+  - { nome: "Inven Global", url: "https://www.invenglobal.com/articles/28810/13-beginner-tips-for-gta-6-i-wish-i-knew-from-the-start" }
   - { nome: "Video Games Chronicle", url: "https://www.videogameschronicle.com/guide/gta-6-beginners-guide-6-tips-you-need-to-know-before-starting-gta-6/" }
   - { nome: "Game8", url: "https://game8.co/games/GTA-6/archives/637017" }
-atualizado_em: 2026-11-19T13:28:00-03:00
+atualizado_em: 2026-11-19T10:46:00-03:00
 destaque: true
 ---
 
@@ -24,3 +26,13 @@ destaque: true
 6. **Jogar sem matar** pode mudar o rumo da história.
 7. **Controle lento?** Diminua a zona morta (dead zone) nas configurações do controle.
 8. **Academia:** treino de força aumenta a vida máxima e cardio aumenta a resistência, segundo os guias.
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- **Bater a porta:** apertar quadrado ao dirigir faz o personagem bater a porta em quem está ao lado; na moto, vira um chute. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Empurrar:** dá para empurrar carros capotados e barcos. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Minimapa dentro de prédios** revela salas escondidas atrás das portas dos fundos das lojas. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Modo Foco** deixa o tempo mais lento para mirar e ajuda a investigar prédios antes de entrar. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Não há repetição de missão:** salve antes das missões principais e dos assaltos. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Primeiro carro:** prefira um modelo mais antigo e discreto. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Ponto de dinheiro no começo:** jogadores mostraram um local com mais de $13 mil e uma carta colecionável rara ([colecionáveis](/gta6/r/colecionaveis-gta-6/)). <span class="nc">❓ Não conseguimos confirmar</span>

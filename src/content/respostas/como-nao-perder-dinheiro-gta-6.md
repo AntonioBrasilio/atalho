@@ -10,8 +10,9 @@ status: confirmado
 fonte_nome: "TechRadar"
 fonte_url: "https://www.techradar.com/live/news/gta-6-launch-day-november-19"
 fontes_extras:
+  - { nome: "GTA Intel", url: "https://gtaintel.com/news/gta-6-money-system-explained" }
   - { nome: "Game8", url: "https://game8.co/games/GTA-6/archives/637017" }
-atualizado_em: 2026-11-19T13:38:00-03:00
+atualizado_em: 2026-11-19T10:53:00-03:00
 destaque: true
 ---
 
@@ -20,3 +21,8 @@ destaque: true
 - **Antes de liberar a conta bancária**, guarde o dinheiro no **esconderijo do chão** da sua safehouse.
 
 Depois de um assalto, a prioridade é chegar a um caixa eletrônico.
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- **Limite de dinheiro vivo:** no máximo **$20.000** no bolso. <span class="nc">❓ Não conseguimos confirmar</span>
+- **Bolsas de assalto (duffel bags):** morrer com a bolsa faria você perder o conteúdo e parte do dinheiro. <span class="nc">❓ Não conseguimos confirmar</span>

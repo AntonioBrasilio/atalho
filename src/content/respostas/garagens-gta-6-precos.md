@@ -11,7 +11,7 @@ fonte_nome: "Beebom"
 fonte_url: "https://beebom.com/gta-6-garage-locations/"
 fontes_extras:
   - { nome: "GameSpot", url: "https://www.gamespot.com/articles/all-garage-locations-and-prices-in-gta-6/" }
-atualizado_em: 2026-11-19T13:46:00-03:00
+atualizado_em: 2026-11-19T10:46:00-03:00
 destaque: true
 ---
 

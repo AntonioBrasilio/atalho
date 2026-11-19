@@ -10,8 +10,9 @@ status: confirmado
 fonte_nome: "TweakTown"
 fonte_url: "https://www.tweaktown.com/news/113383/rockstar-explains-how-gta-6-character-switching-will-work-between-jason-and-lucia/index.html"
 fontes_extras:
+  - { nome: "Beebom", url: "https://beebom.com/gta-6-dual-protagonists-switching-system-guide/amp/" }
   - { nome: "Canaltech", url: "https://canaltech.com.br/games/como-funciona-o-novo-sistema-de-troca-de-personagens-em-gta-6-rockstar-explica/" }
-atualizado_em: 2026-11-19T13:24:00-03:00
+atualizado_em: 2026-11-19T10:47:00-03:00
 destaque: false
 ---
 
@@ -22,3 +23,7 @@ destaque: false
 **Botão:** um guia aponta **R1** no PS5, com base no vídeo da Rockstar, mas isso **não está confirmado**. Confira em Configurações → Controles.
 
 Lembre: [separar a dupla](/gta6/r/como-baixar-estrelas-de-procurado-gta-6/) pode ajudar a fugir da polícia.
+
+### ❓ O que outros sites dizem (não conseguimos confirmar)
+
+- **Botão:** um guia aponta **R1** no PS5; outro diz que é apertar e soltar **↓ no direcional**. <span class="nc">❓ Não conseguimos confirmar</span>

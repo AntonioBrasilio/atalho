@@ -24,7 +24,7 @@ export const CATEGORIA_INFO: Record<Categoria, { nome: string; descricao: string
 
 export const STATUS_INFO: Record<Status, { emoji: string; rotulo: string; curto: string; classe: string }> = {
   confirmado: { emoji: '✅', rotulo: 'Confirmado', curto: 'Confirmado', classe: 'ok' },
-  vazamento: { emoji: '🟡', rotulo: 'Vazamento ou não oficial', curto: 'Não oficial', classe: 'leak' },
+  vazamento: { emoji: '❓', rotulo: 'Não confirmado', curto: 'Não confirmado', classe: 'leak' },
   testando: { emoji: '⏳', rotulo: 'Ainda testando', curto: 'Testando', classe: 'test' },
 };
 

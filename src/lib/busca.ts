@@ -14,7 +14,7 @@ interface Item {
 
 const SELO: Record<Item['st'], string> = {
   confirmado: '✅ Confirmado',
-  vazamento: '🟡 Não oficial',
+  vazamento: '❓ Não confirmado',
   testando: '⏳ Testando',
 };
 
