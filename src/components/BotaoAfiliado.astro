@@ -1,0 +1,46 @@
+---
+import { urlAfiliado } from '../lib/util';
+interface Props {
+  loja: 'amazon' | 'ml';
+  url?: string;
+  guia?: string;
+}
+const { loja, url, guia = '' } = Astro.props;
+const href = urlAfiliado(loja, url);
+const rotulo = loja === 'amazon' ? 'Ver preço na Amazon' : 'Ver no Mercado Livre';
+---
+
+{
+  href ? (
+    <a
+      class:list={['btn', 'btn-af', loja === 'amazon' ? 'af-amz' : 'af-ml']}
+      href={href}
+      target="_blank"
+      rel="sponsored nofollow noopener"
+      data-track="affiliate_click"
+      data-track-loja={loja}
+      data-track-guia={guia}
+    >
+      {rotulo}
+    </a>
+  ) : (
+    <span class="btn btn-sec btn-af" aria-disabled="true">
+      {rotulo} (em breve)
+    </span>
+  )
+}
+
+<style>
+  .btn-af {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+  .af-amz {
+    background: #ffb340;
+    color: #1b1203;
+  }
+  .af-ml {
+    background: #ffe600;
+    color: #1c1a05;
+  }
+</style>

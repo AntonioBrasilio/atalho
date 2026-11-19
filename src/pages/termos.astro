@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+const atualizacao = '18/11/2026';
+---
+
+<Base title="Termos de Uso" description={`Termos de uso do ${config.siteName}: conteúdo, anúncios, links de afiliado e responsabilidades.`}>
+  <div class="prosa">
+    <h1>Termos de Uso</h1>
+    <p class="muted">Última atualização: {atualizacao}</p>
+
+    <p>Ao usar o {config.siteName}, você concorda com estes termos. Se não concordar, não use o site.</p>
+
+    <h2>1. O que é o site</h2>
+    <p>
+      O {config.siteName} publica respostas curtas e guias sobre jogos. {config.avisoFan} Nomes, marcas e jogos citados
+      pertencem aos seus respectivos donos e são usados apenas para identificação.
+    </p>
+
+    <h2>2. Precisão das informações</h2>
+    <p>
+      Fazemos o possível para manter as respostas corretas e atualizadas, e cada uma mostra um selo de confiabilidade,
+      a fonte e a data. Mesmo assim, jogos recebem atualizações e informações podem mudar. O conteúdo é oferecido "no
+      estado em que se encontra", sem garantia de que esteja livre de erros. Informações marcadas como 🟡 vazamento ou
+      ⏳ testando não são confirmadas.
+    </p>
+
+    <h2>3. Uso permitido</h2>
+    <ul>
+      <li>Você pode ler, compartilhar links e citar trechos curtos com indicação da fonte.</li>
+      <li>Não é permitido copiar o conteúdo em massa, republicar sem autorização ou usar robôs para extrair o site.</li>
+      <li>Não use o site para atividades ilegais ou para prejudicar o seu funcionamento.</li>
+    </ul>
+
+    <h2>4. Anúncios, patrocínios e links de afiliado</h2>
+    <p>
+      O site exibe anúncios de terceiros e pode ter links de afiliado e conteúdo patrocinado, sempre identificados. Não
+      somos responsáveis por produtos, preços, entregas ou políticas de lojas e anunciantes. Qualquer compra é feita
+      diretamente com a loja.
+    </p>
+
+    <h2>5. Produtos digitais</h2>
+    <p>
+      Quando houver produto digital à venda, a compra é processada por plataforma de pagamento de terceiros, que segue
+      suas próprias regras, incluindo o direito de arrependimento previsto no Código de Defesa do Consumidor.
+    </p>
+
+    <h2>6. Links externos</h2>
+    <p>Links para outros sites são oferecidos por conveniência. Não controlamos nem respondemos pelo conteúdo deles.</p>
+
+    <h2>7. Envio de correções</h2>
+    <p>
+      Ao enviar uma correção ou sugestão, você autoriza o uso dessa informação para atualizar o conteúdo, sem que isso
+      gere remuneração.
+    </p>
+
+    <h2>8. Limitação de responsabilidade</h2>
+    <p>
+      Na extensão permitida pela lei, não nos responsabilizamos por perdas de progresso em jogos, problemas em contas ou
+      consoles, ou decisões de compra tomadas com base no conteúdo do site.
+    </p>
+
+    <h2>9. Privacidade</h2>
+    <p>O tratamento de dados pessoais está descrito na <a href="/privacidade/">Política de Privacidade</a>.</p>
+
+    <h2>10. Alterações e lei aplicável</h2>
+    <p>
+      Podemos alterar estes termos a qualquer momento; a data da última atualização fica no topo. Estes termos seguem as
+      leis do Brasil.
+    </p>
+
+    <h2>11. Contato</h2>
+    <p><a href={`mailto:${config.emailContato}`}>{config.emailContato}</a></p>
+  </div>
+</Base>

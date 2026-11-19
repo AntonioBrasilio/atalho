@@ -1,0 +1,103 @@
+---
+import { config } from '../config';
+const atual = Astro.url.pathname;
+const links = [
+  { href: '/gta6/', nome: 'GTA 6' },
+  { href: '/gta6/codigos/', nome: 'Códigos' },
+  { href: '/comprar/', nome: 'Comprar' },
+  { href: '/comunidade/', nome: 'Comunidade' },
+  ...(config.produto.ativo ? [{ href: '/guia-platina/', nome: 'Guia Platina' }] : []),
+];
+const ehAtual = (href: string) =>
+  href === '/gta6/' ? atual.startsWith('/gta6/') && !atual.startsWith('/gta6/codigos/') : atual.startsWith(href);
+---
+
+<header class="topo">
+  <div class="topo-in">
+    <a href="/" class="logo" aria-label={`${config.siteName}: início`}>
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff3d8b"></stop>
+            <stop offset=".55" stop-color="#ff9a3c"></stop>
+            <stop offset="1" stop-color="#2de2e6"></stop>
+          </linearGradient>
+        </defs>
+        <rect width="32" height="32" rx="8" fill="#1d1929"></rect>
+        <path d="M18.5 4 8 18h7l-1.5 10L24 14h-7l1.5-10Z" fill="url(#lg)"></path>
+      </svg>
+      <span>{config.siteName}</span>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={ehAtual(l.href) ? 'page' : undefined}>
+                {l.nome}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .topo {
+    border-bottom: 1px solid var(--borda);
+    background: #0d0b14;
+  }
+  .topo-in {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0.3rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0 0.8rem;
+    flex-wrap: wrap;
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    text-decoration: none;
+    color: var(--txt);
+    font-family: var(--display);
+    font-size: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+  nav {
+    margin-left: auto;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 0.1rem;
+    margin: 0;
+    padding: 0;
+  }
+  li + li {
+    margin: 0;
+  }
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.55rem;
+    color: var(--txt-2);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--txt);
+    box-shadow: inset 0 -2px 0 var(--rosa);
+  }
+</style>

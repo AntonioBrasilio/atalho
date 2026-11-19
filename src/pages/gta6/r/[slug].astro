@@ -1,0 +1,171 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Busca from '../../../components/Busca.astro';
+import Migalhas from '../../../components/Migalhas.astro';
+import Selo from '../../../components/Selo.astro';
+import Anuncio from '../../../components/Anuncio.astro';
+import CaixaAfiliado from '../../../components/CaixaAfiliado.astro';
+import CardResposta from '../../../components/CardResposta.astro';
+import WhatsCta from '../../../components/WhatsCta.astro';
+import { config } from '../../../config';
+import { respostasGta6 } from '../../../lib/dados';
+import {
+  CATEGORIA_INFO,
+  formatarData,
+  ldBreadcrumb,
+  ldFaq,
+  relacionadas,
+  urlCategoria,
+  urlCorrecao,
+  urlResposta,
+  type Resposta,
+} from '../../../lib/util';
+
+export async function getStaticPaths() {
+  const todas = await respostasGta6();
+  return todas.map((r) => ({ params: { slug: r.data.slug }, props: { r, todas } }));
+}
+
+interface Props {
+  r: Resposta;
+  todas: Resposta[];
+}
+const { r, todas } = Astro.props;
+const d = r.data;
+const { Content } = await render(r);
+const cat = CATEGORIA_INFO[d.categoria];
+const guia = d.afiliado_contextual ? await getEntry('guias', d.afiliado_contextual) : undefined;
+const rel = relacionadas(r, todas);
+
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'GTA 6', url: '/gta6/' },
+  { nome: cat.nome, url: cat.paginaFixa ?? urlCategoria(d.categoria) },
+];
+const jsonld = [
+  ldFaq([{ pergunta: d.pergunta, resposta: d.resposta_curta }]),
+  ldBreadcrumb([...migalhas, { nome: d.pergunta, url: urlResposta(d.slug) }]),
+];
+const fontes = [
+  ...(d.fonte_url ? [{ nome: d.fonte_nome ?? new URL(d.fonte_url).hostname, url: d.fonte_url }] : []),
+  ...d.fontes_extras,
+];
+---
+
+<Base
+  title={`${d.pergunta} (resposta rápida) | ${config.siteName}`}
+  tituloCru
+  description={d.resposta_curta}
+  ogType="article"
+  jsonld={jsonld}
+>
+  <Busca compacta id="busca-r" />
+  <Migalhas itens={migalhas} />
+
+  <article>
+    <h1>{d.pergunta}</h1>
+
+    <div class="resposta" role="note" aria-label="Resposta">
+      <p>{d.resposta_curta}</p>
+    </div>
+
+    <p class="meta">
+      <Selo status={d.status} />
+      <span class="muted">
+        Atualizado em <time datetime={d.atualizado_em.toISOString()}>{formatarData(d.atualizado_em)}</time>
+      </span>
+    </p>
+
+    <Anuncio posicao="top" />
+
+    <div class="prosa">
+      <Content />
+    </div>
+
+    {
+      fontes.length > 0 && (
+        <p class="fonte">
+          <strong>{fontes.length > 1 ? 'Fontes' : 'Fonte'}:</strong>{' '}
+          {fontes.map((f, i) => (
+            <>
+              {i > 0 && ' · '}
+              <a href={f.url} target="_blank" rel="nofollow noopener">
+                {f.nome}
+              </a>
+            </>
+          ))}
+        </p>
+      )
+    }
+  </article>
+
+  {guia && <CaixaAfiliado guia={guia} />}
+
+  {
+    rel.length > 0 && (
+      <section>
+        <h2>Perguntas relacionadas</h2>
+        <ul class="lista-cards">
+          {rel.map((x) => (
+            <li>
+              <CardResposta r={x} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <WhatsCta origem="resposta" />
+
+  <Anuncio posicao="bottom" />
+
+  <p class="correcao">
+    <a href={urlCorrecao(d.slug)} target="_blank" rel="noopener" data-track="correction_click" data-track-slug={d.slug}>
+      Achou algo errado ou descobriu algo novo? Envie
+    </a>
+  </p>
+</Base>
+
+<style>
+  h1 {
+    margin-bottom: 0.8rem;
+  }
+  .resposta {
+    background:
+      linear-gradient(var(--bg-2), var(--bg-2)) padding-box,
+      var(--grad) border-box;
+    border: 2px solid transparent;
+    border-radius: var(--raio);
+    padding: 1rem 1.1rem;
+  }
+  .resposta p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.7rem;
+    margin: 0.8rem 0 1rem;
+    font-size: 0.9rem;
+  }
+  .fonte {
+    font-size: 0.92rem;
+    color: var(--txt-2);
+    word-break: break-word;
+  }
+  .fonte a {
+    display: inline-block;
+    padding: 0.5rem 0;
+  }
+  .correcao a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+</style>

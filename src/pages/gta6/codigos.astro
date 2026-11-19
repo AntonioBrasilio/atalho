@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+import Busca from '../../components/Busca.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import CardResposta from '../../components/CardResposta.astro';
+import Anuncio from '../../components/Anuncio.astro';
+import WhatsCta from '../../components/WhatsCta.astro';
+import { respostasGta6 } from '../../lib/dados';
+import { formatarData, ldBreadcrumb, urlResposta } from '../../lib/util';
+
+const todas = await respostasGta6();
+const daCategoria = todas.filter((r) => r.data.categoria === 'codigos');
+/** Só conta como "código confirmado" a resposta com status confirmado E com o campo `codigo` preenchido. */
+const confirmados = daCategoria.filter((r) => r.data.status === 'confirmado' && r.data.codigo);
+const ps5 = confirmados.filter((r) => r.data.codigo!.plataforma === 'ps5');
+const xbox = confirmados.filter((r) => r.data.codigo!.plataforma === 'xbox');
+const ultima = daCategoria[0]?.data.atualizado_em;
+
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'GTA 6', url: '/gta6/' },
+  { nome: 'Códigos', url: '/gta6/codigos/' },
+];
+const tabelas = [
+  { nome: 'PS5', lista: ps5 },
+  { nome: 'Xbox Series X|S', lista: xbox },
+];
+---
+
+<Base
+  title="Códigos do GTA 6 (cheats) confirmados"
+  description={`Códigos confirmados do GTA 6: ${confirmados.length}. Só publicamos cheats testados, para PS5 e Xbox Series X|S. Cuidado com golpes.`}
+  jsonld={[ldBreadcrumb(migalhas)]}
+>
+  <Busca compacta id="busca-cod" />
+  <Migalhas itens={migalhas} />
+  <h1>Códigos do <span class="grad-txt">GTA 6</span></h1>
+
+  <div class="contador" role="status">
+    <span class="n">{confirmados.length}</span>
+    <span>Códigos confirmados</span>
+  </div>
+  {ultima && <p class="muted">Página atualizada em {formatarData(ultima)}.</p>}
+
+  <aside class="golpe" aria-label="Aviso anti-golpe">
+    <strong>⚠️ Cuidado com golpes</strong>
+    <p>
+      Sites que prometem "gerador de dinheiro" ou códigos antes do lançamento são golpe. Nunca informe sua senha da PSN
+      ou da conta Microsoft. <a href={urlResposta('cheats-funcionam-no-gta-online')}>Saiba mais</a>.
+    </p>
+  </aside>
+
+  {
+    tabelas.map((t) => (
+      <section>
+        <h2>{t.nome}</h2>
+        {t.lista.length ? (
+          <div class="tabela-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Efeito</th>
+                  <th scope="col">Sequência</th>
+                </tr>
+              </thead>
+              <tbody>
+                {t.lista.map((r) => (
+                  <tr>
+                    <td>
+                      <a href={urlResposta(r.data.slug)}>{r.data.codigo!.efeito}</a>
+                    </td>
+                    <td>
+                      <code>{r.data.codigo!.sequencia}</code>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p class="aviso">⏳ Nenhum código confirmado ainda para {t.nome}. Estamos testando no jogo.</p>
+        )}
+      </section>
+    ))
+  }
+
+  <Anuncio posicao="middle" />
+
+  <h2>Perguntas sobre códigos</h2>
+  <ul class="lista-cards">
+    {
+      daCategoria.map((r) => (
+        <li>
+          <CardResposta r={r} />
+        </li>
+      ))
+    }
+  </ul>
+
+  <WhatsCta titulo="Seja avisado quando sair um código confirmado" origem="codigos" />
+</Base>
+
+<style>
+  .contador {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .contador .n {
+    font-family: var(--display);
+    font-size: 3.2rem;
+    line-height: 1;
+    color: var(--laranja);
+  }
+  .golpe {
+    background: #ff3d8b14;
+    border: 1px solid #ff3d8b66;
+    border-radius: var(--raio);
+    padding: 0.9rem 1rem;
+    margin: 1rem 0;
+  }
+  .golpe p {
+    margin: 0.3rem 0 0;
+  }
+  code {
+    font-size: 0.95rem;
+    color: var(--ciano);
+  }
+</style>

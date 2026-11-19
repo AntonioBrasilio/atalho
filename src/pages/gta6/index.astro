@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import Busca from '../../components/Busca.astro';
+import CardResposta from '../../components/CardResposta.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import Anuncio from '../../components/Anuncio.astro';
+import WhatsCta from '../../components/WhatsCta.astro';
+import { config } from '../../config';
+import { CATEGORIAS } from '../../content.config';
+import { respostasGta6 } from '../../lib/dados';
+import { CATEGORIA_INFO, ldBreadcrumb, urlCategoria } from '../../lib/util';
+
+const todas = await respostasGta6();
+const destaques = todas.filter((r) => r.data.destaque);
+const cats = CATEGORIAS.map((c) => ({
+  id: c,
+  ...CATEGORIA_INFO[c],
+  qtd: todas.filter((r) => r.data.categoria === c).length,
+}));
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'GTA 6', url: '/gta6/' },
+];
+const pat = config.patrocinador;
+---
+
+<Base
+  title="GTA 6: respostas rápidas"
+  description="Respostas curtas sobre GTA 6: horário de lançamento, preço, tamanho, polícia, mapa, códigos e troféus. Com selo de confiabilidade."
+  jsonld={[ldBreadcrumb(migalhas)]}
+>
+  <Migalhas itens={migalhas} />
+
+  {
+    pat.ativo && pat.nome && (
+      <a class="patro" href={pat.url} target="_blank" rel="sponsored noopener">
+        <span class="muted">Oferecido por</span> <strong>{pat.nome}</strong>
+        {pat.texto && <span class="muted"> · {pat.texto}</span>}
+      </a>
+    )
+  }
+
+  <h1><span class="grad-txt">GTA 6</span>: respostas rápidas</h1>
+  <Busca id="busca-hub" />
+
+  <nav class="atalhos" aria-label="Atalhos">
+    <a class="btn btn-sec" href="/gta6/codigos/">🎮 Códigos</a>
+    <a class="btn btn-sec" href="/gta6/trofeus/">🏆 Troféus</a>
+    <a class="btn btn-sec" href="/gta6/erros/">🛠️ Erros</a>
+  </nav>
+
+  <h2>Destaques</h2>
+  <ul class="lista-cards">
+    {
+      destaques.map((r) => (
+        <li>
+          <CardResposta r={r} />
+        </li>
+      ))
+    }
+  </ul>
+
+  <Anuncio posicao="middle" />
+
+  <h2>Categorias</h2>
+  <ul class="cats">
+    {
+      cats.map((c) => (
+        <li>
+          {c.qtd > 0 ? (
+            <a class="card cat" href={c.paginaFixa ?? urlCategoria(c.id)}>
+              <strong>{c.nome}</strong>
+              <span class="muted">{c.descricao}</span>
+              <span class="qtd">
+                {c.qtd} {c.qtd === 1 ? 'resposta' : 'respostas'}
+              </span>
+            </a>
+          ) : (
+            <div class="card cat vazia">
+              <strong>{c.nome}</strong>
+              <span class="muted">Em breve</span>
+            </div>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+
+  <WhatsCta origem="hub_gta6" />
+</Base>
+
+<style>
+  .patro {
+    display: block;
+    margin-top: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    background: var(--bg-2);
+    color: var(--txt);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .atalhos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .cats {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0.6rem;
+  }
+  .cats li + li {
+    margin: 0;
+  }
+  .cat {
+    display: grid;
+    gap: 0.2rem;
+    height: 100%;
+    color: var(--txt);
+    text-decoration: none;
+  }
+  .cat:hover {
+    color: var(--txt);
+    border-color: var(--ciano);
+  }
+  .cat .muted {
+    font-size: 0.88rem;
+  }
+  .qtd {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--laranja);
+  }
+  .vazia {
+    opacity: 0.6;
+  }
+</style>

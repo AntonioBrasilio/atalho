@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+const atualizacao = '18/11/2026';
+---
+
+<Base
+  title="Política de Privacidade"
+  description={`Como o ${config.siteName} trata dados pessoais, cookies, anúncios de terceiros e links de afiliado, conforme a LGPD.`}
+>
+  <div class="prosa">
+    <h1>Política de Privacidade</h1>
+    <p class="muted">Última atualização: {atualizacao}</p>
+
+    <p>
+      Esta política explica como o {config.siteName} ("site", "nós") coleta, usa e protege dados pessoais de quem visita o
+      site, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, "LGPD").
+    </p>
+
+    <h2>1. Quem é o controlador</h2>
+    <p>
+      O controlador dos dados é {config.responsavel}. Contato para assuntos de privacidade:
+      <a href={`mailto:${config.emailContato}`}>{config.emailContato}</a>.
+    </p>
+
+    <h2>2. Quais dados coletamos</h2>
+    <ul>
+      <li>
+        <strong>Dados de navegação</strong>: páginas visitadas, tempo de visita, tipo de dispositivo e navegador, cidade
+        ou região aproximada e origem do acesso. Coletados por ferramentas de análise, de forma agregada.
+      </li>
+      <li>
+        <strong>Termos de busca</strong>: quando uma busca no site não encontra resultado, o termo digitado pode ser
+        registrado, sem identificar você, para sabermos quais respostas criar.
+      </li>
+      <li>
+        <strong>Dados que você envia</strong>: se você mandar uma correção por formulário ou um e-mail, recebemos o que
+        você escrever e, no caso do e-mail, o seu endereço.
+      </li>
+      <li>
+        <strong>Preferências salvas no seu aparelho</strong>: sua escolha sobre cookies e o progresso do checklist de
+        troféus ficam salvos apenas no armazenamento local do seu navegador. Não recebemos esses dados.
+      </li>
+    </ul>
+    <p>Não pedimos cadastro e não coletamos dados sensíveis.</p>
+
+    <h2>3. Para que usamos os dados e bases legais</h2>
+    <ul>
+      <li>Medir audiência e melhorar o conteúdo: <strong>consentimento</strong> (para cookies de análise) e <strong>legítimo interesse</strong> (para dados agregados sem cookies).</li>
+      <li>Exibir anúncios: <strong>consentimento</strong>.</li>
+      <li>Responder mensagens e corrigir respostas: <strong>legítimo interesse</strong> e execução do seu pedido.</li>
+      <li>Cumprir obrigações legais: <strong>cumprimento de obrigação legal</strong>.</li>
+    </ul>
+
+    <h2>4. Cookies</h2>
+    <p>
+      Cookies são pequenos arquivos salvos no seu navegador. Ao entrar no site, mostramos um aviso para você aceitar ou
+      recusar cookies de análise e de publicidade. <strong>Esses cookies só são carregados se você aceitar.</strong> Você
+      pode mudar sua escolha a qualquer momento pelo link "Cookies" no rodapé ou apagando os dados do site no seu
+      navegador.
+    </p>
+    <ul>
+      <li><strong>Essenciais</strong>: guardam sua escolha sobre cookies (armazenamento local).</li>
+      <li><strong>Análise</strong>: Google Analytics 4, para estatísticas de uso.</li>
+      <li><strong>Publicidade</strong>: cookies de redes de anúncios, descritos abaixo.</li>
+    </ul>
+
+    <h2>5. Anúncios de terceiros</h2>
+    <p>
+      O site pode exibir anúncios de redes de terceiros, como o Google AdSense. Esses fornecedores, incluindo o Google,
+      usam cookies para exibir anúncios com base em visitas anteriores a este e a outros sites. O uso de cookies de
+      publicidade permite que o Google e seus parceiros exibam anúncios com base nessas visitas.
+    </p>
+    <p>
+      Você pode desativar a publicidade personalizada nas
+      <a href="https://adssettings.google.com" target="_blank" rel="noopener nofollow">Configurações de anúncios do Google</a>
+      e saber mais em
+      <a href="https://policies.google.com/technologies/ads?hl=pt-BR" target="_blank" rel="noopener nofollow">Como o Google usa cookies em publicidade</a>.
+      Outros fornecedores permitem a desativação em
+      <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener nofollow">aboutads.info</a>.
+    </p>
+
+    <h2>6. Links de afiliado</h2>
+    <p>
+      Algumas páginas têm links de afiliado para lojas como Amazon e Mercado Livre. Se você comprar por eles, podemos
+      receber uma comissão, sem custo extra para você. Ao clicar, você vai para o site da loja, que tem sua própria
+      política de privacidade e pode usar cookies para registrar a indicação. Esses links são sempre identificados.
+    </p>
+
+    <h2>7. Com quem compartilhamos</h2>
+    <p>
+      Compartilhamos dados apenas com os fornecedores necessários para o funcionamento do site: hospedagem (Netlify),
+      análise de audiência (Google), redes de anúncios e formulários (Google Forms). Alguns desses fornecedores podem
+      tratar dados fora do Brasil, com as salvaguardas previstas na LGPD. Não vendemos dados pessoais.
+    </p>
+
+    <h2>8. Por quanto tempo guardamos</h2>
+    <p>
+      Dados de análise seguem o prazo de retenção configurado na ferramenta (até 14 meses). Mensagens e correções são
+      guardadas enquanto forem necessárias para responder e manter o histórico do conteúdo.
+    </p>
+
+    <h2>9. Seus direitos</h2>
+    <p>
+      Pela LGPD, você pode pedir: confirmação de que tratamos seus dados, acesso, correção, anonimização, bloqueio ou
+      eliminação, portabilidade, informação sobre compartilhamento e revogação do consentimento. Para isso, escreva para
+      <a href={`mailto:${config.emailContato}?subject=Privacidade`}>{config.emailContato}</a>. Você também pode reclamar
+      à Autoridade Nacional de Proteção de Dados (ANPD).
+    </p>
+
+    <h2>10. Crianças e adolescentes</h2>
+    <p>
+      O conteúdo trata de jogos com classificação indicativa para maiores. Não coletamos intencionalmente dados de
+      crianças.
+    </p>
+
+    <h2>11. Mudanças nesta política</h2>
+    <p>Podemos atualizar esta política. A data da última atualização fica no topo da página.</p>
+  </div>
+</Base>

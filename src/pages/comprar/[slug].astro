@@ -1,0 +1,126 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import BotaoAfiliado from '../../components/BotaoAfiliado.astro';
+import Anuncio from '../../components/Anuncio.astro';
+import { guias } from '../../lib/dados';
+import { formatarData, ldBreadcrumb, ldFaq, type Guia } from '../../lib/util';
+
+export async function getStaticPaths() {
+  return (await guias()).map((g) => ({ params: { slug: g.data.slug }, props: { g } }));
+}
+
+interface Props {
+  g: Guia;
+}
+const { g } = Astro.props;
+const d = g.data;
+const { Content } = await render(g);
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'Comprar', url: '/comprar/' },
+  { nome: d.titulo, url: `/comprar/${d.slug}/` },
+];
+const jsonld = [ldBreadcrumb(migalhas), ...(d.faq.length ? [ldFaq(d.faq)] : [])];
+---
+
+<Base title={d.titulo} description={d.descricao} ogType="article" jsonld={jsonld}>
+  <Migalhas itens={migalhas} />
+  <h1>{d.titulo}</h1>
+  <p class="aviso">
+    <strong>Aviso:</strong> esta página tem links de afiliado. Se você comprar por eles, podemos ganhar uma comissão, sem
+    custo extra para você. Isso não muda nossas escolhas.
+  </p>
+  <p class="resumo">{d.resumo}</p>
+  <p class="muted atual">Atualizado em {formatarData(d.atualizado_em)}</p>
+
+  <h2>Nossas escolhas</h2>
+  <ul class="escolhas">
+    {
+      d.escolhas.map((e) => (
+        <li class="card escolha">
+          <span class="tipo">{e.tipo}</span>
+          <strong class="nome">{e.nome}</strong>
+          <span class="muted">{e.especificacao}</span>
+          <div class="botoes">
+            <BotaoAfiliado loja="amazon" url={e.amazon_url} guia={d.slug} />
+            <BotaoAfiliado loja="ml" url={e.ml_url} guia={d.slug} />
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Passo a passo</h2>
+  <div class="prosa">
+    <Content />
+  </div>
+
+  {
+    d.faq.length > 0 && (
+      <section>
+        <h2>Perguntas frequentes</h2>
+        {d.faq.map((q) => (
+          <details class="card faq">
+            <summary>{q.pergunta}</summary>
+            <p>{q.resposta}</p>
+          </details>
+        ))}
+      </section>
+    )
+  }
+
+  <Anuncio posicao="bottom" />
+</Base>
+
+<style>
+  .resumo {
+    font-size: 1.1rem;
+  }
+  .atual {
+    font-size: 0.88rem;
+  }
+  .escolhas {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  }
+  .escolhas li + li {
+    margin: 0;
+  }
+  .escolha {
+    display: grid;
+    gap: 0.35rem;
+    align-content: start;
+  }
+  .tipo {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    color: var(--laranja);
+  }
+  .nome {
+    font-size: 1.05rem;
+  }
+  .botoes {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+  }
+  .faq {
+    margin-bottom: 0.5rem;
+    padding: 0;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0.8rem 1rem;
+    min-height: 44px;
+  }
+  .faq p {
+    padding: 0 1rem 0.8rem;
+    margin: 0;
+  }
+</style>

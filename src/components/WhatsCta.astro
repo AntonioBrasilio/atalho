@@ -1,0 +1,28 @@
+---
+import { config } from '../config';
+interface Props {
+  titulo?: string;
+  texto?: string;
+  origem?: string;
+}
+const {
+  titulo = 'Receba dicas novas no WhatsApp',
+  texto = 'Avisamos no canal quando uma resposta muda de "testando" para "confirmado". Sem spam.',
+  origem = 'cta',
+} = Astro.props;
+const url = config.whatsappChannelUrl || '/comunidade/';
+const externo = Boolean(config.whatsappChannelUrl);
+---
+
+<section class="cta" aria-label={titulo}>
+  <h2>{titulo}</h2>
+  <p class="muted">{texto}</p>
+  <a
+    class="btn btn-zap"
+    href={url}
+    data-track="whatsapp_click"
+    data-track-origem={origem}
+    target={externo ? '_blank' : undefined}
+    rel={externo ? 'noopener' : undefined}>Entrar no canal do WhatsApp</a
+  >
+</section>

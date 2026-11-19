@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+---
+
+<Base title="Contato" description={`Fale com o ${config.siteName}: correções, sugestões, privacidade e parcerias.`}>
+  <div class="prosa">
+    <h1><span class="grad-txt">Contato</span></h1>
+    <p>Fale com a gente pelo e-mail:</p>
+    <p class="email"><a href={`mailto:${config.emailContato}`}>{config.emailContato}</a></p>
+
+    <h2>Assuntos</h2>
+    <ul>
+      <li><strong>Correção de resposta</strong>: use o link "Envie" no fim da resposta, ou mande o endereço da página por e-mail.</li>
+      <li><strong>Privacidade e dados pessoais (LGPD)</strong>: use o assunto "Privacidade". Veja também a <a href="/privacidade/">Política de Privacidade</a>.</li>
+      <li><strong>Anúncios e parcerias</strong>: veja a página <a href="/anuncie/">Anuncie</a>.</li>
+      <li><strong>Direitos autorais</strong>: se algum conteúdo infringe seus direitos, escreva com o link da página e a comprovação de titularidade.</li>
+    </ul>
+    <p class="muted">Respondemos por ordem de chegada, normalmente em poucos dias úteis.</p>
+  </div>
+</Base>
+
+<style>
+  .email {
+    font-size: 1.2rem;
+    font-weight: 700;
+    word-break: break-all;
+  }
+</style>

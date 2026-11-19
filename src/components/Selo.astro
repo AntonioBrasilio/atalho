@@ -1,0 +1,40 @@
+---
+import { STATUS_INFO, type Status } from '../lib/util';
+interface Props {
+  status: Status;
+  curto?: boolean;
+}
+const { status, curto = false } = Astro.props;
+const s = STATUS_INFO[status];
+---
+
+<span class={`selo selo-${s.classe}`}><span aria-hidden="true">{s.emoji}</span> {curto ? s.curto : s.rotulo}</span>
+
+<style is:global>
+  .selo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .selo-ok {
+    color: var(--verde);
+    border-color: #3ddc8466;
+    background: #3ddc8414;
+  }
+  .selo-leak {
+    color: var(--amarelo);
+    border-color: #ffd23f66;
+    background: #ffd23f14;
+  }
+  .selo-test {
+    color: #d6d1e2;
+    border-color: #a59fb566;
+    background: #a59fb514;
+  }
+</style>

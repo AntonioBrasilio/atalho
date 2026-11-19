@@ -1,0 +1,51 @@
+---
+import BotaoAfiliado from './BotaoAfiliado.astro';
+import type { Guia } from '../lib/util';
+interface Props {
+  guia: Guia;
+}
+const { guia } = Astro.props;
+const escolha = guia.data.escolhas.find((e) => e.tipo === 'Custo-benefício') ?? guia.data.escolhas[0];
+const preenchido = !escolha.nome.includes('[PREENCHER');
+---
+
+<aside class="card caixa-af" aria-label="Sugestão de compra">
+  <p class="af-aviso">Link de afiliado: podemos ganhar comissão, sem custo extra para você.</p>
+  <h2>{guia.data.titulo}</h2>
+  <p class="muted">{guia.data.resumo}</p>
+  {
+    preenchido && (
+      <>
+        <p>
+          <strong>Nossa escolha custo-benefício:</strong> {escolha.nome}, {escolha.especificacao}
+        </p>
+        <div class="af-btns">
+          <BotaoAfiliado loja="amazon" url={escolha.amazon_url} guia={guia.data.slug} />
+          <BotaoAfiliado loja="ml" url={escolha.ml_url} guia={guia.data.slug} />
+        </div>
+      </>
+    )
+  }
+  <a class="btn btn-sec" href={`/comprar/${guia.data.slug}/`}>Ver o guia completo</a>
+</aside>
+
+<style>
+  .caixa-af {
+    margin: 1.5rem 0;
+    border-color: #ff9a3c66;
+  }
+  .caixa-af h2 {
+    margin-top: 0.3rem;
+    font-size: 1.3rem;
+  }
+  .af-aviso {
+    font-size: 0.8rem;
+    color: var(--laranja);
+    margin: 0;
+  }
+  .af-btns {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+</style>

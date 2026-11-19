@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+---
+
+<Base
+  title="Anuncie no Atalho"
+  description="Formatos de patrocínio no Atalho: público gamer brasileiro, mobile e com intenção clara."
+>
+  <h1>Anuncie no <span class="grad-txt">{config.siteName}</span></h1>
+  <p class="sub">
+    Jogadores brasileiros de 16 a 35 anos, quase todos no celular, buscando uma resposta enquanto jogam.
+  </p>
+
+  <h2>Números</h2>
+  <div class="tabela-wrap">
+    <table>
+      <tbody>
+        <tr><th scope="row">Visitantes únicos / mês</th><td>[PREENCHER]</td></tr>
+        <tr><th scope="row">Páginas vistas / mês</th><td>[PREENCHER]</td></tr>
+        <tr><th scope="row">Acesso pelo celular</th><td>[PREENCHER] %</td></tr>
+        <tr><th scope="row">Membros do canal do WhatsApp</th><td>[PREENCHER]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Formatos</h2>
+  <ul>
+    <li><strong>"Oferecido por"</strong>: faixa fixa com sua marca no topo do hub de um jogo.</li>
+    <li><strong>Banner nas respostas</strong>: posição de topo nas páginas de resposta de uma categoria.</li>
+    <li><strong>Menção no canal do WhatsApp</strong>: mensagem identificada como publicidade.</li>
+    <li><strong>Guia patrocinado</strong>: guia de compra com selo de "conteúdo patrocinado".</li>
+  </ul>
+
+  <h2>Regras</h2>
+  <ul>
+    <li>Todo conteúdo pago é identificado como publicidade.</li>
+    <li>Não aceitamos pop-up, pop-under, redirecionamento automático, apostas ou produtos ilegais.</li>
+    <li>Patrocínio não altera respostas nem selos de confiabilidade.</li>
+  </ul>
+
+  <h2>Contato</h2>
+  <p>
+    Escreva para <a href={`mailto:${config.emailContato}?subject=Anuncie`}>{config.emailContato}</a> com sua marca, período
+    e formato de interesse. Respondemos em até [PREENCHER] dias úteis.
+  </p>
+</Base>
+
+<style>
+  .sub {
+    font-size: 1.1rem;
+  }
+  th {
+    width: 60%;
+  }
+</style>

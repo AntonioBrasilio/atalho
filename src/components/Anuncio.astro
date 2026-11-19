@@ -1,0 +1,74 @@
+---
+/**
+ * Bloco de anúncio. Lê o provedor em src/config.ts.
+ * - provider "none" (ou slot sem ID): não renderiza nada.
+ * - Altura reservada para não causar CLS.
+ * - Os scripts só carregam depois do consentimento de cookies (src/lib/cliente.ts).
+ * - Sem pop-under, interstitial ou redirecionamento: só blocos in-page.
+ */
+import { config } from '../config';
+interface Props {
+  posicao: 'top' | 'middle' | 'bottom';
+}
+const { posicao } = Astro.props;
+const { provider, adsenseClient, adsenseSlots, adsterraScripts } = config.ads;
+
+let render: 'adsense' | 'adsterra' | null = null;
+if (provider === 'adsense' && adsenseClient && adsenseSlots[posicao]) render = 'adsense';
+if (provider === 'adsterra' && adsterraScripts[posicao].key) render = 'adsterra';
+const bloco = adsterraScripts[posicao];
+const altura = render === 'adsterra' ? bloco.height : posicao === 'top' ? 100 : 280;
+---
+
+{
+  render && (
+    <aside class="ad-wrap" aria-label="Publicidade">
+      <span class="ad-rot">Publicidade</span>
+      {render === 'adsense' && (
+        <div class="ad-slot" style={`min-height:${altura}px`}>
+          <ins
+            class="adsbygoogle"
+            style="display:block"
+            data-ad-client={adsenseClient}
+            data-ad-slot={adsenseSlots[posicao]}
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
+        </div>
+      )}
+      {render === 'adsterra' && (
+        <div
+          class="ad-slot ad-adsterra"
+          style={`min-height:${altura}px`}
+          data-key={bloco.key}
+          data-w={bloco.width}
+          data-h={bloco.height}
+        />
+      )}
+    </aside>
+  )
+}
+
+<style>
+  .ad-wrap {
+    margin: 1.4rem 0;
+    text-align: center;
+  }
+  .ad-rot {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cinza);
+    margin-bottom: 0.25rem;
+  }
+  .ad-slot {
+    background: var(--bg-2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ad-adsterra {
+    display: flex;
+    justify-content: center;
+  }
+</style>

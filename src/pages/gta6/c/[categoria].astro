@@ -1,0 +1,55 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Busca from '../../../components/Busca.astro';
+import Migalhas from '../../../components/Migalhas.astro';
+import CardResposta from '../../../components/CardResposta.astro';
+import Anuncio from '../../../components/Anuncio.astro';
+import WhatsCta from '../../../components/WhatsCta.astro';
+import { CATEGORIAS } from '../../../content.config';
+import { respostasGta6 } from '../../../lib/dados';
+import { CATEGORIA_INFO, ldBreadcrumb, urlCategoria, type Categoria, type Resposta } from '../../../lib/util';
+
+export async function getStaticPaths() {
+  const todas = await respostasGta6();
+  return CATEGORIAS.map((c) => ({
+    params: { categoria: c },
+    props: { lista: todas.filter((r) => r.data.categoria === c) },
+  })).filter((p) => p.props.lista.length > 0);
+}
+
+interface Props {
+  lista: Resposta[];
+}
+const { lista } = Astro.props;
+const categoria = Astro.params.categoria as Categoria;
+const info = CATEGORIA_INFO[categoria];
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'GTA 6', url: '/gta6/' },
+  { nome: info.nome, url: urlCategoria(categoria) },
+];
+---
+
+<Base
+  title={`GTA 6: ${info.nome}`}
+  description={`Respostas rápidas de GTA 6 sobre ${info.nome.toLowerCase()}. ${info.descricao}`}
+  canonical={info.paginaFixa ?? urlCategoria(categoria)}
+  jsonld={[ldBreadcrumb(migalhas)]}
+>
+  <Busca compacta id="busca-cat" />
+  <Migalhas itens={migalhas} />
+  <h1>GTA 6: <span class="grad-txt">{info.nome}</span></h1>
+  <p class="muted">{info.descricao}</p>
+  {info.paginaFixa && <p><a href={info.paginaFixa}>Ver a página completa de {info.nome.toLowerCase()} →</a></p>}
+  <ul class="lista-cards">
+    {
+      lista.map((r) => (
+        <li>
+          <CardResposta r={r} />
+        </li>
+      ))
+    }
+  </ul>
+  <Anuncio posicao="bottom" />
+  <WhatsCta origem={`categoria_${categoria}`} />
+</Base>

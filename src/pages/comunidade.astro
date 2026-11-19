@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+const zap = config.whatsappChannelUrl;
+const discord = config.discordUrl;
+---
+
+<Base
+  title="Comunidade: WhatsApp e Discord"
+  description="Entre no canal do WhatsApp do Atalho e receba respostas novas de GTA 6 assim que forem confirmadas."
+>
+  <h1><span class="grad-txt">Comunidade</span></h1>
+  <p class="sub">Receba as respostas novas assim que forem confirmadas e mande suas dúvidas.</p>
+
+  <section class="card bloco">
+    <h2>📱 Canal do WhatsApp</h2>
+    <p class="muted">
+      Avisos rápidos: quando uma resposta muda de "testando" para "confirmado", quando sai código novo e quando há golpe
+      circulando.
+    </p>
+    {
+      zap ? (
+        <a class="btn btn-zap" href={zap} target="_blank" rel="noopener" data-track="whatsapp_click" data-track-origem="comunidade">
+          Entrar no canal do WhatsApp
+        </a>
+      ) : (
+        <span class="btn btn-sec" aria-disabled="true">
+          Canal em breve
+        </span>
+      )
+    }
+  </section>
+
+  <section class="card bloco">
+    <h2>💬 Discord</h2>
+    <p class="muted">Para conversar, tirar dúvidas com outros jogadores e ajudar a testar respostas.</p>
+    {
+      discord ? (
+        <a class="btn btn-sec" href={discord} target="_blank" rel="noopener" data-track="discord_click">
+          Entrar no Discord
+        </a>
+      ) : (
+        <span class="btn btn-sec" aria-disabled="true">
+          Discord em breve
+        </span>
+      )
+    }
+  </section>
+</Base>
+
+<style>
+  .sub {
+    font-size: 1.1rem;
+  }
+  .bloco {
+    margin-bottom: 1rem;
+  }
+  .bloco h2 {
+    margin-top: 0;
+  }
+</style>

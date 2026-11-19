@@ -1,0 +1,98 @@
+---
+/* Página de venda do produto. Sem anúncios. Só aparece no menu e no sitemap se produto.ativo = true. */
+import Base from '../layouts/Base.astro';
+import WhatsCta from '../components/WhatsCta.astro';
+import { config } from '../config';
+
+const p = config.produto;
+const ativo = p.ativo && Boolean(p.checkoutUrl);
+---
+
+<Base
+  title={p.nome}
+  description={`${p.nome}: [PREENCHER descrição curta do produto].`}
+  noindex={!p.ativo}
+>
+  <h1><span class="grad-txt">{p.nome}</span></h1>
+
+  {
+    ativo ? (
+      <>
+        <p class="sub">[PREENCHER: promessa principal do guia em 1 frase]</p>
+        <section class="card oferta">
+          <p class="preco">{p.preco}</p>
+          <a
+            class="btn"
+            href={p.checkoutUrl}
+            target="_blank"
+            rel="noopener"
+            data-track="product_click"
+            data-track-produto={p.nome}
+          >
+            Quero o guia
+          </a>
+          <p class="muted pag">Pagamento processado pela plataforma de checkout. Acesso imediato após a confirmação.</p>
+        </section>
+
+        <h2>O que vem no guia</h2>
+        <ul>
+          <li>[PREENCHER: item 1]</li>
+          <li>[PREENCHER: item 2]</li>
+          <li>[PREENCHER: item 3]</li>
+        </ul>
+
+        <h2>Para quem é</h2>
+        <p>[PREENCHER]</p>
+
+        <h2>Perguntas frequentes</h2>
+        <details class="card faq">
+          <summary>Como recebo o guia?</summary>
+          <p>[PREENCHER]</p>
+        </details>
+        <details class="card faq">
+          <summary>Tem garantia?</summary>
+          <p>[PREENCHER: conforme a política da plataforma de checkout]</p>
+        </details>
+      </>
+    ) : (
+      <>
+        <p class="sub">Em breve. Entre no canal para saber quando o guia for lançado.</p>
+        <WhatsCta titulo="Seja avisado do lançamento" origem="guia_platina" />
+      </>
+    )
+  }
+</Base>
+
+<style>
+  .sub {
+    font-size: 1.15rem;
+  }
+  .oferta {
+    text-align: center;
+    display: grid;
+    gap: 0.6rem;
+    justify-items: center;
+  }
+  .preco {
+    font-family: var(--display);
+    font-size: 2.4rem;
+    margin: 0;
+  }
+  .pag {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  .faq {
+    margin-bottom: 0.5rem;
+    padding: 0;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0.8rem 1rem;
+  }
+  .faq p {
+    padding: 0 1rem 0.8rem;
+    margin: 0;
+  }
+</style>

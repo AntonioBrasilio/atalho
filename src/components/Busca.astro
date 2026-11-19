@@ -1,0 +1,161 @@
+---
+import { config } from '../config';
+interface Props {
+  compacta?: boolean;
+  id?: string;
+}
+const { compacta = false, id = 'busca' } = Astro.props;
+const zap = config.whatsappChannelUrl || '/comunidade/';
+---
+
+<form class:list={['busca', { compacta }]} role="search" action="/" method="get" data-busca>
+  <label for={id} class="sr-only">Buscar uma resposta</label>
+  <div class="campo">
+    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.4"></circle>
+      <path d="m20 20-4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+    </svg>
+    <input
+      id={id}
+      type="search"
+      name="q"
+      autocomplete="off"
+      enterkeyhint="search"
+      placeholder={compacta ? 'Buscar outra dúvida…' : 'Ex.: que horas libera, estrelas, cheats…'}
+      role="combobox"
+      aria-expanded="false"
+      aria-controls={`${id}-lista`}
+      aria-autocomplete="list"
+    />
+    <button type="submit" class="ir">Buscar</button>
+  </div>
+  <ul id={`${id}-lista`} role="listbox" aria-label="Resultados" hidden></ul>
+  <div class="busca-vazio" role="status" hidden>
+    <p><strong>Ainda não temos essa resposta: estamos testando.</strong></p>
+    <a class="btn btn-zap" href={zap} data-track="whatsapp_click" data-track-origem="busca_sem_resultado">
+      Avise quando tiver
+    </a>
+  </div>
+</form>
+
+<script>
+  import { iniciarBuscas } from '../lib/busca';
+  iniciarBuscas();
+</script>
+
+<style is:global>
+  .busca {
+    position: relative;
+    margin: 0.5rem 0 1rem;
+  }
+  .busca .campo {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--bg-2);
+    border: 2px solid var(--borda);
+    border-radius: 999px;
+    padding: 0.25rem 0.3rem 0.25rem 0.9rem;
+    color: var(--txt-2);
+  }
+  .busca .campo:focus-within {
+    border-color: var(--rosa);
+  }
+  .busca input {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    background: transparent;
+    border: 0;
+    color: var(--txt);
+    font: inherit;
+    font-size: 1.05rem;
+  }
+  .busca input:focus {
+    outline: none;
+  }
+  .busca input::placeholder {
+    color: #9d97ad;
+  }
+  .busca .ir {
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--grad);
+    color: #160b12;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .busca.compacta .campo {
+    border-width: 1px;
+  }
+  .busca.compacta input {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+  .busca [role='listbox'] {
+    list-style: none;
+    margin: 0.4rem 0 0;
+    padding: 0.3rem;
+    background: var(--bg-3);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    max-height: 70vh;
+    overflow-y: auto;
+    box-shadow: 0 12px 40px #000a;
+  }
+  .busca [role='option'] {
+    margin: 0;
+  }
+  .busca [role='option'] a {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.65rem 0.7rem;
+    border-radius: 10px;
+    color: var(--txt);
+    text-decoration: none;
+  }
+  .busca [role='option'][aria-selected='true'] a,
+  .busca [role='option'] a:hover {
+    background: var(--bg-2);
+    outline: 1px solid var(--rosa);
+  }
+  .busca .resumo {
+    color: var(--txt-2);
+    font-size: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .busca .sel {
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .sel-confirmado {
+    color: var(--verde);
+  }
+  .sel-vazamento {
+    color: var(--amarelo);
+  }
+  .sel-testando {
+    color: #d6d1e2;
+  }
+  .busca-vazio {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    background: var(--bg-3);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+  }
+  .busca-vazio p {
+    margin-bottom: 0.7rem;
+  }
+</style>

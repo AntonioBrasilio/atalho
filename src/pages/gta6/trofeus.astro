@@ -1,0 +1,169 @@
+---
+import Base from '../../layouts/Base.astro';
+import Busca from '../../components/Busca.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import CardResposta from '../../components/CardResposta.astro';
+import WhatsCta from '../../components/WhatsCta.astro';
+import trofeusData from '../../data/trofeus.json';
+import { respostasGta6 } from '../../lib/dados';
+import { formatarData, ldBreadcrumb } from '../../lib/util';
+
+interface Trofeu {
+  id: string;
+  nome: string;
+  descricao: string;
+  tipo: 'bronze' | 'prata' | 'ouro' | 'platina';
+  dica?: string;
+}
+const trofeus = trofeusData.trofeus as Trofeu[];
+const relacionados = (await respostasGta6()).filter((r) => r.data.categoria === 'trofeus');
+const ICONE = { bronze: '🥉', prata: '🥈', ouro: '🥇', platina: '🏆' };
+
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'GTA 6', url: '/gta6/' },
+  { nome: 'Troféus', url: '/gta6/trofeus/' },
+];
+---
+
+<Base
+  title="Troféus do GTA 6: lista e checklist"
+  description="Lista de troféus e conquistas do GTA 6 com checklist que salva seu progresso no celular."
+  jsonld={[ldBreadcrumb(migalhas)]}
+>
+  <Busca compacta id="busca-tro" />
+  <Migalhas itens={migalhas} />
+  <h1>Troféus do <span class="grad-txt">GTA 6</span></h1>
+
+  {
+    trofeus.length === 0 ? (
+      <div class="aviso status-lista">
+        <p>
+          <strong>⏳ Status: {trofeusData.status}.</strong>
+        </p>
+        <p>
+          Assim que a lista oficial sair, ela aparece aqui com um checklist que salva seu progresso no próprio celular.
+        </p>
+        <p class="muted">Atualizado em {formatarData(new Date(trofeusData.atualizado_em))}.</p>
+      </div>
+    ) : (
+      <section id="checklist" data-chave="atalho-trofeus-gta6">
+        <p class="progresso" aria-live="polite">
+          <strong data-feitos>0</strong> de {trofeus.length} troféus
+        </p>
+        <ul class="trofeus">
+          {trofeus.map((t) => (
+            <li class="card">
+              <label>
+                <input type="checkbox" value={t.id} />
+                <span>
+                  <strong>
+                    <span aria-hidden="true">{ICONE[t.tipo]}</span> {t.nome}
+                  </strong>
+                  <span class="muted">{t.descricao}</span>
+                  {t.dica && <span class="dica">Dica: {t.dica}</span>}
+                </span>
+              </label>
+            </li>
+          ))}
+        </ul>
+        <button type="button" class="btn btn-sec" data-limpar>
+          Limpar progresso
+        </button>
+      </section>
+    )
+  }
+
+  {
+    relacionados.length > 0 && (
+      <>
+        <h2>Perguntas sobre troféus</h2>
+        <ul class="lista-cards">
+          {relacionados.map((r) => (
+            <li>
+              <CardResposta r={r} />
+            </li>
+          ))}
+        </ul>
+      </>
+    )
+  }
+
+  <WhatsCta titulo="Seja avisado quando a lista oficial sair" origem="trofeus" />
+</Base>
+
+<script>
+  const sec = document.getElementById('checklist');
+  if (sec) {
+    const chave = sec.dataset.chave!;
+    const caixas = Array.from(sec.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
+    const contador = sec.querySelector('[data-feitos]')!;
+    const ler = (): string[] => {
+      try {
+        return JSON.parse(localStorage.getItem(chave) || '[]');
+      } catch {
+        return [];
+      }
+    };
+    const salvar = () => {
+      const feitos = caixas.filter((c) => c.checked).map((c) => c.value);
+      contador.textContent = String(feitos.length);
+      try {
+        localStorage.setItem(chave, JSON.stringify(feitos));
+      } catch {
+        /* sem armazenamento: o checklist funciona, mas não salva */
+      }
+    };
+    const feitos = new Set(ler());
+    caixas.forEach((c) => {
+      c.checked = feitos.has(c.value);
+      c.addEventListener('change', salvar);
+    });
+    contador.textContent = String(caixas.filter((c) => c.checked).length);
+    sec.querySelector('[data-limpar]')?.addEventListener('click', () => {
+      if (!confirm('Apagar todo o progresso salvo?')) return;
+      caixas.forEach((c) => (c.checked = false));
+      salvar();
+    });
+  }
+</script>
+
+<style>
+  .status-lista p {
+    margin-bottom: 0.5rem;
+  }
+  .trofeus {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .trofeus li + li {
+    margin: 0;
+  }
+  label {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  label > span {
+    display: grid;
+    gap: 0.15rem;
+  }
+  input[type='checkbox'] {
+    width: 26px;
+    height: 26px;
+    margin-top: 0.1rem;
+    accent-color: var(--rosa);
+    flex-shrink: 0;
+  }
+  .dica {
+    font-size: 0.88rem;
+    color: var(--ciano);
+  }
+  .progresso {
+    font-size: 1.1rem;
+  }
+</style>

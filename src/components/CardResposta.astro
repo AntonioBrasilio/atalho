@@ -1,0 +1,35 @@
+---
+import Selo from './Selo.astro';
+import { urlResposta, type Resposta } from '../lib/util';
+interface Props {
+  r: Resposta;
+}
+const { r } = Astro.props;
+---
+
+<a class="card card-r" href={urlResposta(r.data.slug)}>
+  <Selo status={r.data.status} curto />
+  <strong>{r.data.pergunta}</strong>
+  <span class="muted">{r.data.resposta_curta}</span>
+</a>
+
+<style>
+  .card-r {
+    display: grid;
+    gap: 0.35rem;
+    justify-items: start;
+    text-decoration: none;
+    color: var(--txt);
+    min-height: 44px;
+  }
+  .card-r:hover {
+    color: var(--txt);
+    border-color: var(--rosa);
+  }
+  strong {
+    font-size: 1.05rem;
+  }
+  .muted {
+    font-size: 0.93rem;
+  }
+</style>

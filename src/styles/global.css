@@ -1,0 +1,259 @@
+@import '@fontsource/anton/latin-400.css';
+
+:root {
+  --bg: #0d0b14;
+  --bg-2: #15121f;
+  --bg-3: #1d1929;
+  --borda: #2e2840;
+  --txt: #f4f1fa;
+  --txt-2: #c3bdd3;
+  --rosa: #ff3d8b;
+  --laranja: #ff9a3c;
+  --ciano: #2de2e6;
+  --verde: #3ddc84;
+  --amarelo: #ffd23f;
+  --cinza: #a59fb5;
+  --grad: linear-gradient(90deg, var(--rosa), var(--laranja) 55%, var(--ciano));
+  --display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --raio: 14px;
+  --max: 46rem;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--txt);
+  font: 17px/1.55 system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+
+a {
+  color: var(--ciano);
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: #8ff3f5;
+}
+
+:focus-visible {
+  outline: 3px solid var(--laranja);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  margin: 1.6rem 0 0.7rem;
+}
+h1 {
+  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  margin-top: 0.6rem;
+}
+h2 {
+  font-size: 1.55rem;
+}
+h3 {
+  font-size: 1.25rem;
+}
+
+.grad-txt {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 1rem;
+}
+li + li {
+  margin-top: 0.3rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+}
+th,
+td {
+  text-align: left;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--borda);
+  vertical-align: top;
+}
+th {
+  color: var(--txt-2);
+  font-weight: 600;
+}
+.tabela-wrap {
+  overflow-x: auto;
+}
+
+blockquote {
+  margin: 0 0 1rem;
+  padding: 0.6rem 1rem;
+  border-left: 3px solid var(--laranja);
+  background: var(--bg-2);
+  border-radius: 0 8px 8px 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Botões ───────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  border: 0;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  color: #160b12;
+  background: var(--grad);
+}
+.btn:hover {
+  color: #160b12;
+  filter: brightness(1.08);
+}
+.btn-sec {
+  background: var(--bg-3);
+  color: var(--txt);
+  border: 1px solid var(--borda);
+}
+.btn-sec:hover {
+  color: var(--txt);
+  border-color: var(--ciano);
+}
+.btn-zap {
+  background: #25d366;
+  color: #062b14;
+}
+.btn-zap:hover {
+  color: #062b14;
+}
+.btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+}
+
+/* ── Cartões ──────────────────────────── */
+.card {
+  background: var(--bg-2);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 1rem;
+}
+.lista-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: grid;
+  gap: 0.7rem;
+}
+.lista-cards li + li {
+  margin: 0;
+}
+
+.aviso {
+  font-size: 0.9rem;
+  color: var(--txt-2);
+  background: var(--bg-2);
+  border: 1px dashed var(--borda);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+}
+
+.cta {
+  margin: 2rem 0;
+  padding: 1.2rem;
+  border-radius: var(--raio);
+  background:
+    linear-gradient(var(--bg-2), var(--bg-2)) padding-box,
+    var(--grad) border-box;
+  border: 2px solid transparent;
+}
+.cta h2 {
+  margin-top: 0;
+}
+
+.migalhas {
+  font-size: 0.9rem;
+  color: var(--txt-2);
+}
+.migalhas ol {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+.migalhas li + li {
+  margin: 0;
+}
+.migalhas li + li::before {
+  content: '›';
+  margin: 0 0.35rem;
+  color: var(--cinza);
+}
+.migalhas a,
+.migalhas span {
+  color: var(--txt-2);
+  display: inline-block;
+  padding: 0.6rem 0;
+}
+
+.prosa img {
+  max-width: 100%;
+  height: auto;
+}
+
+.muted {
+  color: var(--txt-2);
+}

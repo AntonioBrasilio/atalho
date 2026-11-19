@@ -1,0 +1,147 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { config } from '../config';
+import { absUrl } from '../lib/util';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** caminho canônico (ex.: '/gta6/'); padrão = URL atual */
+  canonical?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+  jsonld?: object[];
+  /** título completo, sem acrescentar " | Atalho" */
+  tituloCru?: boolean;
+}
+
+const {
+  title,
+  description = config.descricaoPadrao,
+  canonical = Astro.url.pathname,
+  ogType = 'website',
+  noindex = false,
+  jsonld = [],
+  tituloCru = false,
+} = Astro.props;
+
+const tituloFinal = tituloCru ? title : `${title} | ${config.siteName}`;
+const canonUrl = absUrl(canonical);
+const ogImg = absUrl('/og.svg');
+
+const clienteCfg = {
+  ga4Id: config.ga4Id,
+  cfToken: config.cloudflareAnalyticsToken,
+  ads: {
+    provider: config.ads.provider,
+    adsenseClient: config.ads.adsenseClient,
+    adsterraDominio: config.ads.adsterraDominio,
+  },
+  form: {
+    url: config.formularios.buscaSemResultadoUrl,
+    campo: config.formularios.buscaSemResultadoCampo,
+  },
+  whatsapp: config.whatsappChannelUrl || '/comunidade/',
+};
+const precisaConsent = Boolean(config.ga4Id) || config.ads.provider !== 'none';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloFinal}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonUrl} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#0d0b14" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${config.siteName}: respostas novas`} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:site_name" content={config.siteName} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={tituloFinal} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonUrl} />
+    <meta property="og:image" content={ogImg} />
+    <meta name="twitter:card" content="summary" />
+
+    {jsonld.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)} />)}
+    <script type="application/json" id="atalho-cfg" set:html={JSON.stringify(clienteCfg)} />
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+
+    {
+      precisaConsent && (
+        <div class="consent" id="consent" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+          <p>
+            Usamos cookies para medir audiência e exibir anúncios. Você pode aceitar ou recusar.{' '}
+            <a href="/privacidade/">Saiba mais</a>.
+          </p>
+          <div class="consent-btns">
+            <button type="button" class="btn btn-sec" data-consent="recusado">
+              Recusar
+            </button>
+            <button type="button" class="btn" data-consent="aceito">
+              Aceitar
+            </button>
+          </div>
+        </div>
+      )
+    }
+
+    <script>
+      import { iniciarSite } from '../lib/cliente';
+      iniciarSite();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  .pular {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--laranja);
+    color: #000;
+    padding: 0.6rem 1rem;
+    z-index: 100;
+  }
+  .pular:focus {
+    left: 0.5rem;
+  }
+  .consent {
+    position: fixed;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 50;
+    max-width: 34rem;
+    margin: 0 auto;
+    background: var(--bg-3);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 1rem;
+    box-shadow: 0 10px 40px #0009;
+    font-size: 0.95rem;
+  }
+  .consent p {
+    margin: 0 0 0.8rem;
+  }
+  .consent-btns {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-end;
+  }
+</style>

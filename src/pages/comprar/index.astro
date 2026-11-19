@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import { guias } from '../../lib/dados';
+import { ldBreadcrumb } from '../../lib/util';
+
+const lista = await guias();
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'Comprar', url: '/comprar/' },
+];
+---
+
+<Base
+  title="Guias de compra para gamers"
+  description="Guias de compra objetivos: SSD, HD externo e acessórios para jogar GTA 6 no PS5 e no Xbox."
+  jsonld={[ldBreadcrumb(migalhas)]}
+>
+  <Migalhas itens={migalhas} />
+  <h1><span class="grad-txt">Guias de compra</span></h1>
+  <p class="aviso">Alguns links desta seção são links de afiliado: podemos ganhar comissão, sem custo extra para você.</p>
+  <ul class="lista-cards">
+    {
+      lista.map((g) => (
+        <li>
+          <a class="card guia" href={`/comprar/${g.data.slug}/`}>
+            <strong>{g.data.titulo}</strong>
+            <span class="muted">{g.data.descricao}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
+
+<style>
+  .guia {
+    display: grid;
+    gap: 0.3rem;
+    color: var(--txt);
+    text-decoration: none;
+  }
+  .guia:hover {
+    color: var(--txt);
+    border-color: var(--laranja);
+  }
+  strong {
+    font-size: 1.1rem;
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+---
+
+<Base title="Sobre o Atalho" description="O que é o Atalho, como produzimos as respostas e o que significa cada selo.">
+  <div class="prosa">
+    <h1>Sobre o <span class="grad-txt">{config.siteName}</span></h1>
+    <p>
+      O {config.siteName} é um site de respostas rápidas para jogadores. A ideia é simples: você está no meio do jogo,
+      pesquisa no celular e recebe a resposta em uma ou duas linhas no topo da página, sem precisar rolar nem ver vídeo
+      de dez minutos.
+    </p>
+
+    <h2>Como produzimos as respostas</h2>
+    <ul>
+      <li>Cada resposta indica a fonte usada, com link.</li>
+      <li>Quando o jogo está disponível, testamos no próprio jogo antes de marcar como confirmado.</li>
+      <li>Toda resposta mostra a data e a hora da última atualização.</li>
+      <li>Qualquer pessoa pode enviar uma correção pelo link no fim de cada resposta.</li>
+    </ul>
+
+    <h2>O que significam os selos</h2>
+    <ul>
+      <li><strong>✅ Confirmado</strong>: informação oficial ou testada no jogo.</li>
+      <li><strong>🟡 Vazamento ou não oficial</strong>: veio de vazamento ou fonte não oficial; pode mudar.</li>
+      <li><strong>⏳ Ainda testando</strong>: ainda não temos uma resposta verificada.</li>
+    </ul>
+
+    <h2>Como o site se mantém</h2>
+    <p>
+      O {config.siteName} é gratuito. Ele se mantém com anúncios de terceiros, links de afiliado (identificados em cada
+      página onde aparecem) e patrocínios identificados como publicidade. Nada disso altera as respostas ou os selos.
+    </p>
+
+    <h2>Aviso</h2>
+    <p>
+      {config.avisoFan} Nomes de jogos e marcas citados pertencem aos seus respectivos donos e são usados apenas para
+      identificação.
+    </p>
+
+    <p>Fale com a gente pela página de <a href="/contato/">contato</a>.</p>
+  </div>
+</Base>

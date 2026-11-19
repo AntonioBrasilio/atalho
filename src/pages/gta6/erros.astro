@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import Busca from '../../components/Busca.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import CardResposta from '../../components/CardResposta.astro';
+import Anuncio from '../../components/Anuncio.astro';
+import WhatsCta from '../../components/WhatsCta.astro';
+import { respostasGta6 } from '../../lib/dados';
+import { ldBreadcrumb } from '../../lib/util';
+
+const lista = (await respostasGta6()).filter((r) => r.data.categoria === 'erros');
+const migalhas = [
+  { nome: 'Início', url: '/' },
+  { nome: 'GTA 6', url: '/gta6/' },
+  { nome: 'Erros', url: '/gta6/erros/' },
+];
+---
+
+<Base
+  title="Erros do GTA 6: soluções rápidas"
+  description="Tela preta, travamentos e outros erros técnicos do GTA 6 no PS5 e Xbox Series X|S, com soluções testadas."
+  jsonld={[ldBreadcrumb(migalhas)]}
+>
+  <Busca compacta id="busca-err" />
+  <Migalhas itens={migalhas} />
+  <h1>Erros do <span class="grad-txt">GTA 6</span>: soluções</h1>
+  <p class="muted">Só publicamos soluções que testamos. Enquanto isso, o selo ⏳ mostra o que ainda está em teste.</p>
+  <ul class="lista-cards">
+    {
+      lista.map((r) => (
+        <li>
+          <CardResposta r={r} />
+        </li>
+      ))
+    }
+  </ul>
+  <p class="aviso">
+    Seu erro não está aqui? Busque acima. Se não houver resultado, o termo chega até nós e entra na fila de testes.
+  </p>
+  <Anuncio posicao="bottom" />
+  <WhatsCta origem="erros" />
+</Base>

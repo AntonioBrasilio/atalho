@@ -1,0 +1,55 @@
+---
+import { config } from '../config';
+const ano = new Date().getFullYear();
+const temConsent = Boolean(config.ga4Id) || config.ads.provider !== 'none';
+---
+
+<footer class="rodape">
+  <div class="rodape-in">
+    <p class="fan">{config.avisoFan}</p>
+    <nav aria-label="Rodapé">
+      <a href="/sobre/">Sobre</a>
+      <a href="/contato/">Contato</a>
+      <a href="/privacidade/">Privacidade</a>
+      <a href="/termos/">Termos</a>
+      <a href="/anuncie/">Anuncie</a>
+      <a href="/comunidade/">Comunidade</a>
+      <a href="/rss.xml">RSS</a>
+      {temConsent && <a href="#" data-abrir-consent>Cookies</a>}
+    </nav>
+    <p class="muted copy">© {ano} {config.siteName}. Marcas citadas pertencem aos seus respectivos donos.</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    border-top: 1px solid var(--borda);
+    background: var(--bg-2);
+    font-size: 0.92rem;
+  }
+  .rodape-in {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 1.2rem 1rem 1.6rem;
+  }
+  .fan {
+    color: var(--txt);
+    font-weight: 600;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+    margin-bottom: 0.6rem;
+  }
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--txt-2);
+  }
+  .copy {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+</style>
