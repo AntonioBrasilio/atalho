@@ -19,7 +19,7 @@ const SELO: Record<Item['st'], string> = {
 };
 
 const CATEGORIA: Record<string, string> = {
-  lancamento: 'Lançamento',
+  lancamento: 'Geral',
   policia: 'Polícia',
   dinheiro: 'Dinheiro',
   mecanicas: 'Mecânicas',
@@ -29,6 +29,9 @@ const CATEGORIA: Record<string, string> = {
   trofeus: 'Troféus',
   erros: 'Erros',
   codigos: 'Códigos',
+  veiculos: 'Veículos',
+  armas: 'Armas',
+  segredos: 'Segredos',
 };
 
 let fusePromise: Promise<Fuse<Item>> | null = null;

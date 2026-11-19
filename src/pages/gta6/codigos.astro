@@ -3,57 +3,68 @@ import Base from '../../layouts/Base.astro';
 import Busca from '../../components/Busca.astro';
 import Migalhas from '../../components/Migalhas.astro';
 import CardResposta from '../../components/CardResposta.astro';
+import Selo from '../../components/Selo.astro';
 import Anuncio from '../../components/Anuncio.astro';
 import WhatsCta from '../../components/WhatsCta.astro';
 import { respostasGta6 } from '../../lib/dados';
-import { formatarData, ldBreadcrumb, urlResposta } from '../../lib/util';
+import { formatarData, ldBreadcrumb, urlResposta, type Resposta } from '../../lib/util';
 
 const todas = await respostasGta6();
 const daCategoria = todas.filter((r) => r.data.categoria === 'codigos');
-/** Só conta como "código confirmado" a resposta com status confirmado E com o campo `codigo` preenchido. */
-const confirmados = daCategoria.filter((r) => r.data.status === 'confirmado' && r.data.codigo);
-const ps5 = confirmados.filter((r) => r.data.codigo!.plataforma === 'ps5');
-const xbox = confirmados.filter((r) => r.data.codigo!.plataforma === 'xbox');
+const comCodigo = daCategoria.filter((r) => r.data.codigo);
+/** "Confirmado" = status confirmado E campo `codigo` preenchido (testado por nós). */
+const confirmados = comCodigo.filter((r) => r.data.status === 'confirmado');
+/** Divulgados por guias, ainda não testados por nós. */
+const divulgados = comCodigo.filter((r) => r.data.status !== 'confirmado');
 const ultima = daCategoria[0]?.data.atualizado_em;
+const PLATAFORMA = { ps5: 'PS5', xbox: 'Xbox', ambos: 'PS5 e Xbox' } as const;
 
 const migalhas = [
   { nome: 'Início', url: '/' },
   { nome: 'GTA 6', url: '/gta6/' },
   { nome: 'Códigos', url: '/gta6/codigos/' },
 ];
-const tabelas = [
-  { nome: 'PS5', lista: ps5 },
-  { nome: 'Xbox Series X|S', lista: xbox },
+const tabelas: { titulo: string; lista: Resposta[]; vazio: string }[] = [
+  { titulo: 'Testados por nós', lista: confirmados, vazio: '⏳ Ainda estamos testando os códigos no jogo.' },
+  { titulo: 'Divulgados (ainda não testados)', lista: divulgados, vazio: 'Nenhum código divulgado ainda.' },
 ];
 ---
 
 <Base
-  title="Códigos do GTA 6 (cheats) confirmados"
-  description={`Códigos confirmados do GTA 6: ${confirmados.length}. Só publicamos cheats testados, para PS5 e Xbox Series X|S. Cuidado com golpes.`}
+  title="Códigos do GTA 6 (cheats): como usar e lista"
+  description={`Como usar cheats no GTA 6 no PS5 e Xbox: abra o celular, segure L1+R1 (LB+RB) e digite no direcional. ${comCodigo.length} código(s) na lista, ${confirmados.length} testado(s).`}
   jsonld={[ldBreadcrumb(migalhas)]}
 >
   <Busca compacta id="busca-cod" />
   <Migalhas itens={migalhas} />
   <h1>Códigos do <span class="grad-txt">GTA 6</span></h1>
+  {ultima && <p class="muted atual">Atualizado em {formatarData(ultima)}</p>}
+
+  <section class="como" aria-labelledby="tit-como">
+    <h2 id="tit-como">Como digitar um cheat</h2>
+    <ol>
+      <li>No mundo aberto, aperte <kbd>↑</kbd> no direcional para abrir o celular.</li>
+      <li>Segure <kbd>L1</kbd>+<kbd>R1</kbd> (PS5) ou <kbd>LB</kbd>+<kbd>RB</kbd> (Xbox).</li>
+      <li>Sem soltar, digite a sequência no direcional.</li>
+    </ol>
+    <p class="alerta">
+      ⚠️ Com cheat ativo, o jogo <strong>não salva</strong> e <strong>não libera troféus</strong>. Salve antes num slot
+      separado. Cada cheat precisa ser <a href={urlResposta('como-desbloquear-cheats-gta-6')}>desbloqueado</a> antes.
+    </p>
+  </section>
 
   <div class="contador" role="status">
     <span class="n">{confirmados.length}</span>
-    <span>Códigos confirmados</span>
+    <span>
+      {confirmados.length === 1 ? 'testado' : 'testados'} por nós · <strong>{divulgados.length}</strong>{' '}
+      {divulgados.length === 1 ? 'divulgado' : 'divulgados'}
+    </span>
   </div>
-  {ultima && <p class="muted">Página atualizada em {formatarData(ultima)}.</p>}
-
-  <aside class="golpe" aria-label="Aviso anti-golpe">
-    <strong>⚠️ Cuidado com golpes</strong>
-    <p>
-      Sites que prometem "gerador de dinheiro" ou códigos antes do lançamento são golpe. Nunca informe sua senha da PSN
-      ou da conta Microsoft. <a href={urlResposta('cheats-funcionam-no-gta-online')}>Saiba mais</a>.
-    </p>
-  </aside>
 
   {
     tabelas.map((t) => (
       <section>
-        <h2>{t.nome}</h2>
+        <h2>{t.titulo}</h2>
         {t.lista.length ? (
           <div class="tabela-wrap">
             <table>
@@ -68,9 +79,13 @@ const tabelas = [
                   <tr>
                     <td>
                       <a href={urlResposta(r.data.slug)}>{r.data.codigo!.efeito}</a>
+                      <div class="sel">
+                        <Selo status={r.data.status} curto />
+                        <span class="plat">{PLATAFORMA[r.data.codigo!.plataforma]}</span>
+                      </div>
                     </td>
                     <td>
-                      <code>{r.data.codigo!.sequencia}</code>
+                      <code class="seq">{r.data.codigo!.sequencia}</code>
                     </td>
                   </tr>
                 ))}
@@ -78,16 +93,24 @@ const tabelas = [
             </table>
           </div>
         ) : (
-          <p class="aviso">⏳ Nenhum código confirmado ainda para {t.nome}. Estamos testando no jogo.</p>
+          <p class="aviso">{t.vazio}</p>
         )}
       </section>
     ))
   }
 
+  <aside class="golpe" aria-label="Aviso anti-golpe">
+    <strong>⚠️ Cuidado com golpes</strong>
+    <p>
+      Cheats não funcionam no GTA Online. Sites que prometem "gerador de dinheiro" são golpe. Nunca informe sua senha da
+      PSN ou da conta Microsoft. <a href={urlResposta('cheats-funcionam-no-gta-online')}>Saiba mais</a>.
+    </p>
+  </aside>
+
   <Anuncio posicao="middle" />
 
   <h2>Perguntas sobre códigos</h2>
-  <ul class="lista-cards">
+  <ul class="lista-cards duas">
     {
       daCategoria.map((r) => (
         <li>
@@ -97,35 +120,81 @@ const tabelas = [
     }
   </ul>
 
-  <WhatsCta titulo="Seja avisado quando sair um código confirmado" origem="codigos" />
+  <WhatsCta titulo="Seja avisado quando testarmos um código novo" origem="codigos" />
 </Base>
 
 <style>
+  .atual {
+    font-size: 0.88rem;
+    margin-top: -0.3rem;
+  }
+  .como {
+    background:
+      linear-gradient(var(--bg-2), var(--bg-2)) padding-box,
+      var(--grad) border-box;
+    border: 2px solid transparent;
+    border-radius: 18px;
+    padding: 1rem 1.1rem;
+  }
+  .como h2 {
+    margin-top: 0;
+  }
+  .como ol {
+    padding-left: 1.2rem;
+  }
+  kbd {
+    display: inline-block;
+    min-width: 1.8em;
+    padding: 0.05em 0.4em;
+    border: 1px solid var(--borda-2);
+    border-bottom-width: 3px;
+    border-radius: 6px;
+    background: var(--bg-3);
+    font: 700 0.9em/1.4 system-ui, sans-serif;
+    text-align: center;
+  }
+  .alerta {
+    margin: 0;
+    font-size: 0.93rem;
+    color: var(--txt-2);
+  }
   .contador {
     display: flex;
     align-items: baseline;
     gap: 0.6rem;
-    font-weight: 700;
-    font-size: 1.1rem;
+    margin-top: 1.2rem;
+    font-weight: 600;
   }
   .contador .n {
     font-family: var(--display);
-    font-size: 3.2rem;
+    font-size: 3rem;
     line-height: 1;
     color: var(--laranja);
+  }
+  .sel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem 0.5rem;
+    margin-top: 0.3rem;
+  }
+  .plat {
+    font-size: 0.8rem;
+    color: var(--txt-2);
+  }
+  .seq {
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
   }
   .golpe {
     background: #ff3d8b14;
     border: 1px solid #ff3d8b66;
     border-radius: var(--raio);
     padding: 0.9rem 1rem;
-    margin: 1rem 0;
+    margin: 1.4rem 0;
   }
   .golpe p {
     margin: 0.3rem 0 0;
-  }
-  code {
-    font-size: 0.95rem;
-    color: var(--ciano);
   }
 </style>

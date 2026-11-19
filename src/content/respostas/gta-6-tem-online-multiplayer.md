@@ -12,7 +12,7 @@ fonte_url: "https://arynews.tv/gta-6-online-will-launch-well-after-single-player
 fontes_extras:
   - { nome: "Omelete", url: "https://www.omelete.com.br/games/gta-6-online-nao-anunciado-quando-entenda" }
 atualizado_em: 2026-11-18T21:30:00-03:00
-destaque: true
+destaque: false
 ---
 
 - Segundo a Take-Two, o GTA 6 é lançado como experiência **single-player**.

@@ -2,16 +2,25 @@
 slug: "gta-6-tela-preta-travando"
 jogo: gta6
 pergunta: "GTA 6 com tela preta ou travando: como resolver?"
-resposta_curta: "Estamos testando no jogo; volte em breve ou entre no canal para ser avisado."
+resposta_curta: "Atualize o console e o jogo, feche o jogo por completo e reinicie. No PS5, limpe o cache pelo Modo Seguro. Veja também se o console está esquentando."
 categoria: erros
 tags: ["erro","tela preta","travando","crash"]
-sinonimos: ["não abre","crashando","congelou","bug","tela preta"]
-status: testando
-atualizado_em: 2026-11-18T07:00:00-03:00
-destaque: false
+sinonimos: ["nao abre","crashando","congelou","bug","tela preta","fechando sozinho","desligando"]
+status: vazamento
+fonte_nome: "Business Upturn"
+fonte_url: "https://businessupturn.com/technology/gaming/gta-6-not-working-on-ps5-four-fixes-players-say-solved-launch-crashes-and-psn-errors/"
+atualizado_em: 2026-11-19T13:16:00-03:00
+destaque: true
 ---
 
-Ainda não temos uma resposta verificada para esta pergunta. Assim que testarmos no jogo, esta página será atualizada com o passo a passo.
+Soluções relatadas por jogadores (não são oficiais da Rockstar):
 
-- Quer ser avisado? Entre no canal do WhatsApp.
-- Já descobriu? Use o link "Envie" no fim da página.
+1. **Atualize o sistema do console.** Segundo relatos, o PS5 pediu uma atualização de sistema para rodar o jogo.
+2. **Atualize o jogo:** destaque o GTA 6, aperte Options → Procurar atualização.
+3. **Feche o jogo de vez**, sem retomar do modo repouso, e reinicie o console.
+4. **PS5, Modo Seguro:** "Limpar cache e reconstruir banco de dados". **Não** escolha "Redefinir PS5", que apaga tudo.
+5. **Superaquecimento:** deixe as entradas de ar livres.
+6. **Rede:** confira se a PSN ou a Xbox Live não estão fora do ar.
+7. **Último recurso:** apague e baixe o jogo de novo. Antes, confira se o seu save tem cópia na nuvem.
+
+Travadas e FPS baixo? Veja as [configurações recomendadas](/gta6/r/gta-6-travando-fps-baixo-configuracoes/).

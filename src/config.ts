@@ -19,7 +19,7 @@ export const config = {
   /** Domínio final, SEM barra no fim. Troque quando apontar seu domínio. */
   siteUrl: 'https://atalho-games.netlify.app',
   descricaoPadrao:
-    'Respostas rápidas de games em 1 linha. Dúvidas de GTA 6 respondidas na hora, com selo de confiabilidade.',
+    'Respostas rápidas de games em 1 linha: cheats, carros, dinheiro e missões de GTA 6, com selo de confiabilidade.',
   emailContato: 'contato@exemplo.com.br', // [PREENCHER]
   /** Nome do responsável pelo site (aparece na Política de Privacidade). */
   responsavel: '[PREENCHER: seu nome ou razão social]',

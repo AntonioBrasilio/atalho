@@ -12,7 +12,7 @@ fonte_url: "https://www.tweaktown.com/news/114382/gta-6s-map-is-roughly-twice-gt
 fontes_extras:
   - { nome: "GTABase", url: "https://www.gtabase.com/articles/gta-6/how-big-is-the-gta-6-map-size-compared-to-other-games" }
 atualizado_em: 2026-11-18T20:25:00-03:00
-destaque: true
+destaque: false
 ---
 
 - **Oficial:** a comparação de "duas vezes o GTA 5" é atribuída à Rockstar.

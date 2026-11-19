@@ -4,7 +4,6 @@ import Busca from '../../components/Busca.astro';
 import CardResposta from '../../components/CardResposta.astro';
 import Migalhas from '../../components/Migalhas.astro';
 import Anuncio from '../../components/Anuncio.astro';
-import StatusLancamento from '../../components/StatusLancamento.astro';
 import WhatsCta from '../../components/WhatsCta.astro';
 import { config } from '../../config';
 import { CATEGORIAS } from '../../content.config';
@@ -32,7 +31,7 @@ const pat = config.patrocinador;
 
 <Base
   title="GTA 6: respostas rápidas"
-  description={`${todas.length} respostas curtas sobre GTA 6: horário de lançamento, preço, edições, online, polícia, mapa, códigos e troféus. Com selo de confiabilidade.`}
+  description={`${todas.length} respostas curtas para quem está jogando GTA 6: cheats, carros, garagens, dinheiro, polícia, armas, missões e troféus. Com selo de confiabilidade.`}
   jsonld={[ldBreadcrumb(migalhas)]}
 >
   <Migalhas itens={migalhas} />
@@ -48,7 +47,6 @@ const pat = config.patrocinador;
 
   <h1><span class="grad-txt">GTA 6</span>: respostas rápidas</h1>
   <Busca id="busca-hub" />
-  <StatusLancamento />
 
   <nav class="atalhos" aria-label="Páginas especiais">
     <a class="atalho" href="/gta6/codigos/"><span aria-hidden="true">🎮</span> Códigos</a>

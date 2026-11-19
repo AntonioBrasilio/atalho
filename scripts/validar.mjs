@@ -52,5 +52,21 @@ for (const p of htmls(DIST)) {
 }
 ok(`${htmls(DIST).length} páginas HTML, ${blocos} blocos JSON-LD válidos`);
 
+// Links internos quebrados
+const existe = (href) => {
+  const p = decodeURI(href.split(/[?#]/)[0]);
+  if (p === '/' ) return true;
+  return existsSync(join(DIST, p)) && (statSync(join(DIST, p)).isFile() || existsSync(join(DIST, p, 'index.html')));
+};
+let links = 0;
+for (const p of htmls(DIST)) {
+  const html = readFileSync(p, 'utf8');
+  for (const m of html.matchAll(/href="(\/[^"/][^"]*|\/)"/g)) {
+    links++;
+    if (!existe(m[1])) falha(`${p}: link interno quebrado ${m[1]}`);
+  }
+}
+ok(`${links} links internos verificados`);
+
 if (erros) { console.error(`\n${erros} erro(s).`); process.exit(1); }
 console.log('\nTudo certo.');

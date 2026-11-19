@@ -75,16 +75,25 @@ O build **falha** se algum campo estiver errado (slug fora do padrão, resposta 
 
 ### Códigos (cheats)
 
-O contador "Códigos confirmados" em `/gta6/codigos/` conta respostas com `categoria: codigos`, `status: confirmado` **e** o campo `codigo` preenchido. Assim, respostas como "Cheats funcionam no GTA Online?" não entram na conta.
+A página `/gta6/codigos/` mostra duas tabelas, montadas a partir das respostas com `categoria: codigos` e o campo `codigo` preenchido:
+
+- **Testados por nós:** `status: confirmado`. Só marque assim depois de testar no jogo.
+- **Divulgados (ainda não testados):** `status: vazamento` ou `testando`.
+
+Respostas sem o campo `codigo` (como "Cheats funcionam no GTA Online?") não entram nas tabelas.
 
 ```yaml
 categoria: codigos
-status: confirmado
+status: vazamento        # troque para confirmado depois de testar
 codigo:
-  plataforma: ps5        # ps5 ou xbox
-  sequencia: "R1, R2, L1, ..."
-  efeito: "Vida e colete cheios"
+  plataforma: ambos      # ps5, xbox ou ambos
+  sequencia: "↑ → ↓ ← ↑ ← ↓ →"
+  efeito: "+$250.000"
 ```
+
+### Respostas removidas
+
+Ao apagar uma resposta, adicione uma linha em `public/_redirects` apontando o endereço antigo para uma página parecida (redirecionamento 301). Assim quem chega por link antigo ou pelo Google não cai na 404. O `npm run check` acusa qualquer link interno quebrado.
 
 ### Troféus
 

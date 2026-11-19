@@ -13,6 +13,9 @@ export const CATEGORIAS = [
   'trofeus',
   'erros',
   'codigos',
+  'veiculos',
+  'armas',
+  'segredos',
 ] as const;
 
 export const STATUS = ['confirmado', 'vazamento', 'testando'] as const;
@@ -37,7 +40,7 @@ const respostas = defineCollection({
     /** Só para respostas de códigos: preencha para entrar na tabela de /gta6/codigos/ */
     codigo: z
       .object({
-        plataforma: z.enum(['ps5', 'xbox']),
+        plataforma: z.enum(['ps5', 'xbox', 'ambos']),
         sequencia: z.string(),
         efeito: z.string(),
       })

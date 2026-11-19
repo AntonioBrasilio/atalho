@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Busca from '../components/Busca.astro';
 import CardResposta from '../components/CardResposta.astro';
-import StatusLancamento from '../components/StatusLancamento.astro';
 import WhatsCta from '../components/WhatsCta.astro';
 import { config, jogos } from '../config';
 import { respostasGta6 } from '../lib/dados';
@@ -14,14 +13,15 @@ const confirmadas = todas.filter((r) => r.data.status === 'confirmado').length;
 
 /** Atalhos para as dúvidas mais procuradas (troque à vontade). */
 const populares = [
-  ['Que horas libera?', 'que-horas-gta-6-libera-no-brasil'],
-  ['Preço', 'quanto-custa-gta-6-no-brasil'],
-  ['É dublado?', 'gta-6-e-dublado-em-portugues'],
-  ['Tem online?', 'gta-6-tem-online-multiplayer'],
-  ['Tamanho (GB)', 'quanto-espaco-gta-6-precisa'],
-  ['Nota Metacritic', 'nota-gta-6-metacritic'],
-  ['Xbox One', 'gta-6-roda-no-xbox-one-cloud'],
   ['Cheats', 'gta-6-tem-codigos-cheats'],
+  ['Código de dinheiro', 'codigo-dinheiro-gta-6'],
+  ['Guardar carro', 'como-guardar-carro-gta-6'],
+  ['Ganhar dinheiro', 'como-ganhar-dinheiro-rapido-gta-6'],
+  ['Fugir da polícia', 'como-baixar-estrelas-de-procurado-gta-6'],
+  ['Salvar o jogo', 'como-salvar-o-jogo-gta-6'],
+  ['Garagens', 'garagens-gta-6-precos'],
+  ['Carros raros', 'carros-raros-gta-6'],
+  ['Armas', 'onde-comprar-armas-gta-6'],
 ].filter(([, s]) => todas.some((r) => r.data.slug === s));
 
 const ldSite = {
@@ -40,8 +40,8 @@ const ldSite = {
 
 <Base title={`${config.siteName}: respostas rápidas de games`} tituloCru jsonld={[ldSite]}>
   <section class="hero">
-    <h1><span class="grad-txt">Sua dúvida de game</span> respondida em 1 linha</h1>
-    <p class="sub">A resposta aparece no topo, com selo de confiabilidade. Sem vídeo de 10 minutos.</p>
+    <h1><span class="grad-txt">Travou no jogo?</span> A resposta em 1 linha</h1>
+    <p class="sub">Cheats, carros, dinheiro, polícia e missões. A resposta aparece no topo, com selo de confiabilidade.</p>
     <Busca id="busca-home" />
     <p class="pop-tit">Mais buscadas</p>
     <ul class="chips" aria-label="Mais buscadas">
@@ -55,7 +55,6 @@ const ldSite = {
         ))
       }
     </ul>
-    <StatusLancamento />
     <p class="stats">
       <span><strong>{todas.length}</strong> respostas</span>
       <span><strong class="ok">{confirmadas}</strong> confirmadas</span>

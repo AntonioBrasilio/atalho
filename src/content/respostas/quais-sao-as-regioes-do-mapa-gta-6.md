@@ -10,7 +10,7 @@ status: confirmado
 fonte_nome: "All Things How"
 fonte_url: "https://allthings.how/gta-6-map-locations-every-confirmed-region-in-leonida/"
 atualizado_em: 2026-11-17T12:50:00-03:00
-destaque: true
+destaque: false
 ---
 
 O jogo se passa no estado fictício de **Leonida**. Regiões confirmadas:

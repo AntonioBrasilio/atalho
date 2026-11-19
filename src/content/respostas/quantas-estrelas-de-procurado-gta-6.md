@@ -10,7 +10,7 @@ status: confirmado
 fonte_nome: "GTABase"
 fonte_url: "https://www.gtabase.com/pt/artigos/gta-6/nivel-de-procurado-do-gta-6-explicado-guia-do-sistema-policial"
 atualizado_em: 2026-11-17T16:30:00-03:00
-destaque: true
+destaque: false
 ---
 
 O nível de procurado no GTA 6 vai até **6 estrelas**.
