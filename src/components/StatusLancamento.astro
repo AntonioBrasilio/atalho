@@ -1,0 +1,87 @@
+---
+/* Faixa com contagem regressiva até o lançamento; depois vira "Já disponível". */
+const LANCAMENTO = '2026-11-19T03:00:00Z'; // 0h de Brasília
+---
+
+<a class="lanc" href="/gta6/r/que-horas-gta-6-libera-no-brasil/" data-lancamento={LANCAMENTO}>
+  <span class="pulso" aria-hidden="true"></span>
+  <span class="lanc-txt">GTA 6 lança em <strong>19/11 à 0h</strong> (Brasília)</span>
+  <span class="lanc-seta" aria-hidden="true">→</span>
+</a>
+
+<script>
+  const el = document.querySelector<HTMLElement>('[data-lancamento]');
+  if (el) {
+    const alvo = Date.parse(el.dataset.lancamento!);
+    const txt = el.querySelector('.lanc-txt')!;
+    const tick = () => {
+      const falta = alvo - Date.now();
+      if (falta <= 0) {
+        el.classList.add('saiu');
+        txt.innerHTML = '<strong>GTA 6 já está disponível</strong> no PS5 e Xbox Series X|S';
+        return;
+      }
+      const h = Math.floor(falta / 3.6e6);
+      const m = Math.floor((falta % 3.6e6) / 6e4);
+      const s = Math.floor((falta % 6e4) / 1000);
+      const pad = (n: number) => String(n).padStart(2, '0');
+      txt.innerHTML =
+        h >= 48
+          ? `GTA 6 lança em <strong>${Math.ceil(h / 24)} dias</strong>`
+          : `GTA 6 libera em <strong>${pad(h)}:${pad(m)}:${pad(s)}</strong>`;
+      setTimeout(tick, 1000);
+    };
+    tick();
+  }
+</script>
+
+<style>
+  .lanc {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    padding: 0.55rem 0.9rem;
+    margin: 0.4rem 0 0.9rem;
+    border-radius: 14px;
+    background: #ff9a3c14;
+    border: 1px solid #ff9a3c55;
+    color: var(--txt);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .lanc:hover {
+    color: var(--txt);
+    border-color: var(--laranja);
+  }
+  .lanc.saiu {
+    background: #3ddc8414;
+    border-color: #3ddc8466;
+  }
+  .lanc-seta {
+    margin-left: auto;
+    color: var(--laranja);
+  }
+  .pulso {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--laranja);
+    box-shadow: 0 0 0 0 #ff9a3caa;
+    animation: pulso 1.8s infinite;
+  }
+  .saiu .pulso {
+    background: var(--verde);
+    box-shadow: 0 0 0 0 #3ddc84aa;
+  }
+  @keyframes pulso {
+    70% {
+      box-shadow: 0 0 0 10px #0000;
+    }
+    100% {
+      box-shadow: 0 0 0 0 #0000;
+    }
+  }
+</style>

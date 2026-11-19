@@ -58,6 +58,8 @@ por exemplo [quanto espaço precisa](/gta6/r/quanto-espaco-gta-6-precisa/).
 
 3. Faça commit e push. A Netlify publica em 1 a 2 minutos.
 
+Os atalhos "Mais buscadas" da home ficam em `src/pages/index.astro` (lista `populares`). A contagem regressiva do lançamento fica em `src/components/StatusLancamento.astro` e vira "Já disponível" sozinha depois da data.
+
 **Campos:**
 
 | Campo | Valores |
@@ -195,7 +197,7 @@ afiliados: { amazonTag: 'seutag-20', mercadoLivreId: '', mercadoLivreParam: '' }
 ```ts
 ga4Id: 'G-XXXXXXXXXX'
 ```
-Eventos enviados: `search`, `search_no_result`, `affiliate_click` (loja, guia), `whatsapp_click`, `product_click`, `correction_click`. O GA4 só carrega após o consentimento. Para ver os parâmetros nos relatórios, cadastre `termo`, `loja` e `guia` em Admin → Definições personalizadas.
+Eventos enviados: `search`, `search_no_result`, `affiliate_click` (loja, guia), `whatsapp_click`, `product_click`, `correction_click`, `share` (slug, method), `copy_answer` (slug), `feedback` (slug, voto = sim/nao) e `filter_status` (status). O GA4 só carrega após o consentimento. Para ver os parâmetros nos relatórios, cadastre `termo`, `loja` e `guia` em Admin → Definições personalizadas.
 
 `cloudflareAnalyticsToken` é opcional e não usa cookies.
 

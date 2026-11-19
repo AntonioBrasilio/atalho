@@ -2,13 +2,27 @@
 import Base from '../layouts/Base.astro';
 import Busca from '../components/Busca.astro';
 import CardResposta from '../components/CardResposta.astro';
+import StatusLancamento from '../components/StatusLancamento.astro';
 import WhatsCta from '../components/WhatsCta.astro';
 import { config, jogos } from '../config';
 import { respostasGta6 } from '../lib/dados';
-import { absUrl } from '../lib/util';
+import { absUrl, urlResposta } from '../lib/util';
 
 const todas = await respostasGta6();
 const novas = todas.slice(0, 8);
+const confirmadas = todas.filter((r) => r.data.status === 'confirmado').length;
+
+/** Atalhos para as dúvidas mais procuradas (troque à vontade). */
+const populares = [
+  ['Que horas libera?', 'que-horas-gta-6-libera-no-brasil'],
+  ['Preço', 'quanto-custa-gta-6-no-brasil'],
+  ['É dublado?', 'gta-6-e-dublado-em-portugues'],
+  ['Tem online?', 'gta-6-tem-online-multiplayer'],
+  ['Tamanho (GB)', 'quanto-espaco-gta-6-precisa'],
+  ['Nota Metacritic', 'nota-gta-6-metacritic'],
+  ['Xbox One', 'gta-6-roda-no-xbox-one-cloud'],
+  ['Cheats', 'gta-6-tem-codigos-cheats'],
+].filter(([, s]) => todas.some((r) => r.data.slug === s));
 
 const ldSite = {
   '@context': 'https://schema.org',
@@ -27,12 +41,33 @@ const ldSite = {
 <Base title={`${config.siteName}: respostas rápidas de games`} tituloCru jsonld={[ldSite]}>
   <section class="hero">
     <h1><span class="grad-txt">Sua dúvida de game</span> respondida em 1 linha</h1>
-    <p class="muted">Digite o que você quer saber. A resposta aparece no topo, com selo de confiabilidade.</p>
+    <p class="sub">A resposta aparece no topo, com selo de confiabilidade. Sem vídeo de 10 minutos.</p>
     <Busca id="busca-home" />
+    <p class="pop-tit">Mais buscadas</p>
+    <ul class="chips" aria-label="Mais buscadas">
+      {
+        populares.map(([nome, slug]) => (
+          <li>
+            <a class="chip" href={urlResposta(slug)}>
+              {nome}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <StatusLancamento />
+    <p class="stats">
+      <span><strong>{todas.length}</strong> respostas</span>
+      <span><strong class="ok">{confirmadas}</strong> confirmadas</span>
+      <span>Atualizado todo dia</span>
+    </p>
   </section>
 
-  <h2>Respostas novas hoje</h2>
-  <ul class="lista-cards">
+  <div class="secao-topo">
+    <h2>Respostas novas</h2>
+    <a href="/gta6/">Ver todas →</a>
+  </div>
+  <ul class="lista-cards duas">
     {
       novas.map((r) => (
         <li>
@@ -41,7 +76,6 @@ const ldSite = {
       ))
     }
   </ul>
-  <p><a href="/gta6/">Ver todas as respostas de GTA 6 →</a></p>
 
   <h2>Jogos</h2>
   <ul class="jogos">
@@ -51,12 +85,14 @@ const ldSite = {
           <a class="card jogo" href={j.url}>
             <span class="jogo-nome">{j.nome}</span>
             <span class="muted">{j.descricao}</span>
-            <span class="muted qtd">{todas.length} respostas</span>
+            <span class="qtd">{todas.length} respostas →</span>
           </a>
         </li>
       ))
     }
-    <li><div class="card jogo breve"><span class="jogo-nome">Em breve</span><span class="muted">Outros jogos.</span></div></li>
+    <li>
+      <div class="card jogo breve"><span class="jogo-nome">Em breve</span><span class="muted">Outros jogos.</span></div>
+    </li>
   </ul>
 
   <WhatsCta origem="home" />
@@ -64,10 +100,37 @@ const ldSite = {
 
 <style>
   .hero {
-    padding: 0.5rem 0 0.5rem;
+    padding-top: 0.6rem;
   }
   .hero h1 {
-    font-size: clamp(2rem, 8.5vw, 3rem);
+    font-size: clamp(2.05rem, 9vw, 3.3rem);
+    margin-bottom: 0.5rem;
+  }
+  .sub {
+    color: var(--txt-2);
+    font-size: 1.02rem;
+    margin-bottom: 0.4rem;
+  }
+  .pop-tit {
+    margin: 0 0 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--txt-2);
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.1rem;
+    font-size: 0.9rem;
+    color: var(--txt-2);
+  }
+  .stats strong {
+    color: var(--txt);
+  }
+  .stats .ok {
+    color: var(--verde);
   }
   .jogos {
     list-style: none;
@@ -99,7 +162,9 @@ const ldSite = {
     font-size: 1.8rem;
   }
   .qtd {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--laranja);
   }
   .breve {
     background: var(--bg-2);

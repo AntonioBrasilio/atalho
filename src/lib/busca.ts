@@ -7,6 +7,7 @@ interface Item {
   p: string; // pergunta
   r: string; // resposta curta
   st: 'confirmado' | 'vazamento' | 'testando';
+  c: string; // categoria
   t: string[]; // tags
   sn: string[]; // sinônimos
 }
@@ -15,6 +16,19 @@ const SELO: Record<Item['st'], string> = {
   confirmado: '✅ Confirmado',
   vazamento: '🟡 Não oficial',
   testando: '⏳ Testando',
+};
+
+const CATEGORIA: Record<string, string> = {
+  lancamento: 'Lançamento',
+  policia: 'Polícia',
+  dinheiro: 'Dinheiro',
+  mecanicas: 'Mecânicas',
+  mapa: 'Mapa',
+  personagens: 'Personagens',
+  missoes: 'Missões',
+  trofeus: 'Troféus',
+  erros: 'Erros',
+  codigos: 'Códigos',
 };
 
 let fusePromise: Promise<Fuse<Item>> | null = null;
@@ -103,7 +117,7 @@ export function iniciarBuscas() {
         .map(
           (it, i) => `<li role="option" id="b${idx}-op${i}" aria-selected="false">
             <a href="${esc(it.u)}" tabindex="-1">
-              <span class="sel sel-${it.st}">${SELO[it.st]}</span>
+              <span class="meta-r"><span class="sel sel-${it.st}">${SELO[it.st]}</span><span class="cat">${esc(CATEGORIA[it.c] ?? '')}</span></span>
               <strong>${esc(it.p)}</strong>
               <span class="resumo">${esc(it.r)}</span>
             </a></li>`,
@@ -141,6 +155,7 @@ export function iniciarBuscas() {
         e.preventDefault();
         marcar((ativo - 1 + n) % n);
       } else if (e.key === 'Escape') {
+        if (lista.hidden && vazio.hidden) input.value = '';
         fechar();
       }
     });
@@ -157,6 +172,16 @@ export function iniciarBuscas() {
     document.addEventListener('click', (e) => {
       if (!form.contains(e.target as Node)) fechar();
     });
+
+    // Atalho de teclado: "/" foca a primeira busca da página
+    if (idx === 0) {
+      document.addEventListener('keydown', (e) => {
+        const alvo = e.target as HTMLElement;
+        if (e.key !== '/' || alvo.closest('input, textarea, [contenteditable]')) return;
+        e.preventDefault();
+        input.focus();
+      });
+    }
 
     // Link de busca: ?q=termo
     if (idx === 0) {

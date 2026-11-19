@@ -15,6 +15,7 @@ const excluir = [
 export default defineConfig({
   site: config.siteUrl,
   trailingSlash: 'always',
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   build: { format: 'directory', inlineStylesheets: 'always' },
   integrations: [
     sitemap({

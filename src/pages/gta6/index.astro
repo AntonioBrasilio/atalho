@@ -4,6 +4,7 @@ import Busca from '../../components/Busca.astro';
 import CardResposta from '../../components/CardResposta.astro';
 import Migalhas from '../../components/Migalhas.astro';
 import Anuncio from '../../components/Anuncio.astro';
+import StatusLancamento from '../../components/StatusLancamento.astro';
 import WhatsCta from '../../components/WhatsCta.astro';
 import { config } from '../../config';
 import { CATEGORIAS } from '../../content.config';
@@ -11,12 +12,17 @@ import { respostasGta6 } from '../../lib/dados';
 import { CATEGORIA_INFO, ldBreadcrumb, urlCategoria } from '../../lib/util';
 
 const todas = await respostasGta6();
-const destaques = todas.filter((r) => r.data.destaque);
-const cats = CATEGORIAS.map((c) => ({
+const destaques = todas.filter((r) => r.data.destaque).slice(0, 8);
+const grupos = CATEGORIAS.map((c) => ({
   id: c,
   ...CATEGORIA_INFO[c],
-  qtd: todas.filter((r) => r.data.categoria === c).length,
-}));
+  lista: todas.filter((r) => r.data.categoria === c),
+})).filter((g) => g.lista.length > 0);
+const contagem = {
+  confirmado: todas.filter((r) => r.data.status === 'confirmado').length,
+  vazamento: todas.filter((r) => r.data.status === 'vazamento').length,
+  testando: todas.filter((r) => r.data.status === 'testando').length,
+};
 const migalhas = [
   { nome: 'Início', url: '/' },
   { nome: 'GTA 6', url: '/gta6/' },
@@ -26,7 +32,7 @@ const pat = config.patrocinador;
 
 <Base
   title="GTA 6: respostas rápidas"
-  description="Respostas curtas sobre GTA 6: horário de lançamento, preço, tamanho, polícia, mapa, códigos e troféus. Com selo de confiabilidade."
+  description={`${todas.length} respostas curtas sobre GTA 6: horário de lançamento, preço, edições, online, polícia, mapa, códigos e troféus. Com selo de confiabilidade.`}
   jsonld={[ldBreadcrumb(migalhas)]}
 >
   <Migalhas itens={migalhas} />
@@ -42,15 +48,18 @@ const pat = config.patrocinador;
 
   <h1><span class="grad-txt">GTA 6</span>: respostas rápidas</h1>
   <Busca id="busca-hub" />
+  <StatusLancamento />
 
-  <nav class="atalhos" aria-label="Atalhos">
-    <a class="btn btn-sec" href="/gta6/codigos/">🎮 Códigos</a>
-    <a class="btn btn-sec" href="/gta6/trofeus/">🏆 Troféus</a>
-    <a class="btn btn-sec" href="/gta6/erros/">🛠️ Erros</a>
+  <nav class="atalhos" aria-label="Páginas especiais">
+    <a class="atalho" href="/gta6/codigos/"><span aria-hidden="true">🎮</span> Códigos</a>
+    <a class="atalho" href="/gta6/trofeus/"><span aria-hidden="true">🏆</span> Troféus</a>
+    <a class="atalho" href="/gta6/erros/"><span aria-hidden="true">🛠️</span> Erros</a>
   </nav>
 
-  <h2>Destaques</h2>
-  <ul class="lista-cards">
+  <div class="secao-topo">
+    <h2>Destaques</h2>
+  </div>
+  <ul class="lista-cards duas">
     {
       destaques.map((r) => (
         <li>
@@ -62,32 +71,75 @@ const pat = config.patrocinador;
 
   <Anuncio posicao="middle" />
 
-  <h2>Categorias</h2>
-  <ul class="cats">
+  <h2 id="todas">Todas as respostas</h2>
+  <ul class="chips" aria-label="Ir para categoria">
     {
-      cats.map((c) => (
+      grupos.map((g) => (
         <li>
-          {c.qtd > 0 ? (
-            <a class="card cat" href={c.paginaFixa ?? urlCategoria(c.id)}>
-              <strong>{c.nome}</strong>
-              <span class="muted">{c.descricao}</span>
-              <span class="qtd">
-                {c.qtd} {c.qtd === 1 ? 'resposta' : 'respostas'}
-              </span>
-            </a>
-          ) : (
-            <div class="card cat vazia">
-              <strong>{c.nome}</strong>
-              <span class="muted">Em breve</span>
-            </div>
-          )}
+          <a class="chip" href={`#cat-${g.id}`}>
+            {g.nome} <span class="n">{g.lista.length}</span>
+          </a>
         </li>
       ))
     }
   </ul>
 
+  <div class="filtro" role="group" aria-label="Filtrar por confiabilidade" data-filtro>
+    <button type="button" class="chip" aria-pressed="true" data-f="todos">Todas <span class="n">{todas.length}</span></button>
+    <button type="button" class="chip" aria-pressed="false" data-f="confirmado">✅ Confirmadas <span class="n">{contagem.confirmado}</span></button>
+    <button type="button" class="chip" aria-pressed="false" data-f="vazamento">🟡 Não oficiais <span class="n">{contagem.vazamento}</span></button>
+    <button type="button" class="chip" aria-pressed="false" data-f="testando">⏳ Testando <span class="n">{contagem.testando}</span></button>
+  </div>
+
+  <div data-grupos>
+    {
+      grupos.map((g) => (
+        <section class="grupo" id={`cat-${g.id}`} aria-labelledby={`tit-${g.id}`}>
+          <div class="secao-topo">
+            <h3 id={`tit-${g.id}`}>{g.nome}</h3>
+            <a href={g.paginaFixa ?? urlCategoria(g.id)}>Abrir →</a>
+          </div>
+          <ul class="lista-cards duas">
+            {g.lista.map((r) => (
+              <li data-st={r.data.status}>
+                <CardResposta r={r} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+    <p class="aviso vazio-filtro" hidden>Nenhuma resposta com esse selo ainda.</p>
+  </div>
+
   <WhatsCta origem="hub_gta6" />
 </Base>
+
+<script>
+  const filtro = document.querySelector<HTMLElement>('[data-filtro]');
+  const grupos = document.querySelector<HTMLElement>('[data-grupos]');
+  if (filtro && grupos) {
+    filtro.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-f]');
+      if (!btn) return;
+      const f = btn.dataset.f!;
+      filtro.querySelectorAll('[data-f]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      let visiveis = 0;
+      grupos.querySelectorAll<HTMLElement>('.grupo').forEach((sec) => {
+        let n = 0;
+        sec.querySelectorAll<HTMLElement>('li[data-st]').forEach((li) => {
+          const mostra = f === 'todos' || li.dataset.st === f;
+          li.hidden = !mostra;
+          if (mostra) n++;
+        });
+        sec.hidden = n === 0;
+        visiveis += n;
+      });
+      grupos.querySelector<HTMLElement>('.vazio-filtro')!.hidden = visiveis > 0;
+      window.atalhoTrack?.('filter_status', { status: f });
+    });
+  }
+</script>
 
 <style>
   .patro {
@@ -102,41 +154,43 @@ const pat = config.patrocinador;
     font-size: 0.9rem;
   }
   .atalhos {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
   }
-  .cats {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
-    gap: 0.6rem;
-  }
-  .cats li + li {
-    margin: 0;
-  }
-  .cat {
-    display: grid;
-    gap: 0.2rem;
-    height: 100%;
+  .atalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    min-height: 72px;
+    padding: 0.6rem;
+    border-radius: 14px;
+    background: var(--bg-2);
+    border: 1px solid var(--borda);
     color: var(--txt);
+    font-weight: 700;
     text-decoration: none;
+    font-size: 0.95rem;
   }
-  .cat:hover {
+  .atalho span {
+    font-size: 1.4rem;
+  }
+  .atalho:hover {
     color: var(--txt);
     border-color: var(--ciano);
   }
-  .cat .muted {
-    font-size: 0.88rem;
+  .filtro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
   }
-  .qtd {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--laranja);
+  .grupo h3 {
+    margin: 1.4rem 0 0.6rem;
   }
-  .vazia {
-    opacity: 0.6;
+  .grupo .secao-topo h3 {
+    margin-bottom: 0.6rem;
   }
 </style>

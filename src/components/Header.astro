@@ -4,12 +4,14 @@ const atual = Astro.url.pathname;
 const links = [
   { href: '/gta6/', nome: 'GTA 6' },
   { href: '/gta6/codigos/', nome: 'Códigos' },
+  { href: '/gta6/trofeus/', nome: 'Troféus' },
   { href: '/comprar/', nome: 'Comprar' },
   { href: '/comunidade/', nome: 'Comunidade' },
   ...(config.produto.ativo ? [{ href: '/guia-platina/', nome: 'Guia Platina' }] : []),
 ];
+const fixas = ['/gta6/codigos/', '/gta6/trofeus/'];
 const ehAtual = (href: string) =>
-  href === '/gta6/' ? atual.startsWith('/gta6/') && !atual.startsWith('/gta6/codigos/') : atual.startsWith(href);
+  href === '/gta6/' ? atual.startsWith('/gta6/') && !fixas.some((f) => atual.startsWith(f)) : atual.startsWith(href);
 ---
 
 <header class="topo">
@@ -46,19 +48,23 @@ const ehAtual = (href: string) =>
 
 <style>
   .topo {
+    position: sticky;
+    top: 0;
+    z-index: 30;
     border-bottom: 1px solid var(--borda);
-    background: #0d0b14;
+    background: #0d0b14f2;
   }
   .topo-in {
     max-width: var(--max);
+    height: var(--topo);
     margin: 0 auto;
-    padding: 0.3rem 1rem;
+    padding: 0 0 0 var(--gutter);
     display: flex;
     align-items: center;
-    gap: 0 0.8rem;
-    flex-wrap: wrap;
+    gap: 0.75rem;
   }
   .logo {
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -66,38 +72,67 @@ const ehAtual = (href: string) =>
     text-decoration: none;
     color: var(--txt);
     font-family: var(--display);
-    font-size: 1.5rem;
+    font-size: 1.45rem;
     letter-spacing: 0.03em;
   }
   nav {
     margin-left: auto;
+    min-width: 0;
     overflow-x: auto;
-    max-width: 100%;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 24px), transparent);
+    mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 24px), transparent);
+  }
+  nav::-webkit-scrollbar {
+    display: none;
   }
   ul {
     list-style: none;
     display: flex;
-    gap: 0.1rem;
     margin: 0;
-    padding: 0;
+    padding: 0 var(--gutter) 0 0.6rem;
   }
   li + li {
     margin: 0;
   }
   nav a {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
-    padding: 0 0.55rem;
+    height: var(--topo);
+    padding: 0 0.6rem;
     color: var(--txt-2);
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.94rem;
     white-space: nowrap;
   }
-  nav a:hover,
+  nav a:hover {
+    color: var(--txt);
+  }
   nav a[aria-current='page'] {
     color: var(--txt);
-    box-shadow: inset 0 -2px 0 var(--rosa);
+  }
+  nav a[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--grad);
+  }
+  @media (min-width: 720px) {
+    .topo-in {
+      padding-right: var(--gutter);
+    }
+    nav {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    ul {
+      padding-right: 0;
+    }
   }
 </style>
